@@ -1,0 +1,19 @@
+<div class="card m-2" style="max-width: 18rem;">
+    <div class="crop">
+        <a routerLink="/product/{{ product.id }}"><img [src]="product.imageUrl"
+                alt="product image : {{ product.libelle }}" />
+        </a>
+    </div>
+
+    <div class="card-body">
+        <a routerLink="/product/{{ product.id }}" class="link-dark">
+            <h4 class="card-title fw-bold">{{ product.libelle }}</h4>
+        </a>
+        <p class="card-text">
+            {{ product.caracteristiques }}
+        </p>
+        <p class="card-text text-muted">{{ product.prixUnitaire | currency: 'EUR'}} </p>
+        <button type="button" class="btn" [ngClass]="[buttonText === 'Produit acheté' ? 'btn-light' : 'btn-dark']"
+            (click)="onBuyProduct()">{{ buttonText }}</button>
+    </div>
+</div>

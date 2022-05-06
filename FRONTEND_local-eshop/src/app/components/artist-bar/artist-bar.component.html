@@ -1,0 +1,25 @@
+<div class="container-fluid d-flex flex-row flex-wrap justify-content-around">
+    <div class="d-flex align-items-center">
+        <a class="card-img-top rounded-circle z-depth-2 hover-overlay link-dark" routerLink="../artist/{{ artist.id }}">
+            <div class="d-flex flex-column align-items-center bg-image hover-overlay"
+                style="width: 288px; height: 514;">
+                <img src='{{ artist.imageUrl }}' class="card-img-top rounded-circle z-depth-2"
+                    style="max-width: 75%;" />
+                <a router-link="../artist">
+                    <div class="mask"></div>
+                </a>
+                <h4 class="card-title fw-bold my-4">{{ artist.nom }}</h4>
+            </div>
+        </a>
+    </div>
+    <div class="d-flex flex-row align-items-center justify-content-start flex-md-row flex-sm-wrap">
+        <app-product-card *ngFor="let product of sampleProducts" [product]="product" class=" mx-3"></app-product-card>
+    </div>
+    
+</div>
+
+<div class="d-flex justify-content-end me-5">
+    <button type="button" class="btn btn-rounded my-3" routerLink="../artist/{{ artist.id }}">
+        Voir +
+    </button>
+</div>

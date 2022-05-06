@@ -1,0 +1,49 @@
+<div class="container my-5">
+    <!-- IMAGE/NOM (CONTAINER - GAUCHE) -->
+    <div class="row">
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <div class="d-flex flex-column align-items-center bg-image hover-overlay"
+                style="width: 288px; height: 514;">
+                <img src='{{ artist.imageUrl }}' class="card-img-top rounded-circle z-depth-2"
+                    style="max-width: 100%;" />
+                <a router-link="../artist">
+                    <div class="mask"></div>
+                </a>
+                <h4 class="card-title fw-bold my-4">{{ artist.nom }}</h4>
+            </div>
+        </div>
+        <!-- TEXTE (CONTAINER - DROITE) -->
+        <div class="col-md-8">
+            <p style="font-size: 1.2rem;">{{ artist.description }}</p>
+            <h5 class="fw-bold">
+                Contact :
+            </h5>
+            <div>{{ artist.email }}</div>
+            <a target="_blank" href="{{artist.facebookLink}}" class="link-dark">Facebook
+                <i class="fas fa-external-link-alt text-muted"></i>
+            </a>
+            <div><a target="_blank" [href]="artist.webLink" class="link-dark">Page web
+                    <i class="fas fa-external-link-alt text-muted"></i>
+                </a> <span style="color: red; font-weight: bold; font-style: italic; font-size: x-large;">PROBLEME LIEN
+                    EXTERNE !!!</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEPARATEUR -->
+    <div class="row m-5">
+        <div class="col-md-5">
+            <hr>
+        </div>
+        <div class="col-md-2 text-center"><i class="fas fa-angle-double-down"></i></div>
+        <div class="col-md-5">
+            <hr>
+        </div>
+    </div>
+
+    <!-- PRODUITS -->
+    <h2 class="text-center"><em> Toutes les créations de <span>{{ artist.nom }}</span></em></h2>
+    <div class="d-flex flex-row align-items-center justify-content-center flex-md-row flex-sm-wrap">
+        <app-product-card *ngFor="let tempProduct of products" [product]="tempProduct"></app-product-card>
+    </div>
+</div>

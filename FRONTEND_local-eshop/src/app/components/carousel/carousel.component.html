@@ -1,0 +1,15 @@
+<mdb-carousel [indicators]="true" [dark]="true" class="container-fluid mt-4 px-5 fs-5 d-none d-sm-block">
+    <mdb-carousel-item *ngFor="let tempImg of images" [interval]="5000">
+        <div class="d-flex flex-row align-items-center" style="background-color: #fdf3f1;">
+            <div class="carousel-image">
+                <img [src]="tempImg" alt="..."  class="img-fluid"/>
+            </div>
+            
+            <div class="p-3 responsive-text">
+                <p class="fw-bold">Nouveaux arrivés !</p>
+                <p>Les éditions « La tête ailleurs » ont rejoint les invités du lôcal ! Une
+                    maison d’édition écolo, sociale et urbaine, implantée à Saint-Denis</p>
+            </div>
+        </div>
+    </mdb-carousel-item>
+</mdb-carousel>

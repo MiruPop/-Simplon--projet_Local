@@ -1,0 +1,6 @@
+<app-carousel></app-carousel>
+<div class="container my-5">
+    <h1>NOS ARTISTES A LA UNE...</h1>
+    <h5>Découvres les artistes du collectif et leurs créations.</h5>
+</div>
+<app-artist-bar *ngFor="let tempArtist of artists" [artist]="tempArtist"></app-artist-bar>

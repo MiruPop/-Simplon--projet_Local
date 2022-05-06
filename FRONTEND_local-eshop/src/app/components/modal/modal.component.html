@@ -1,0 +1,30 @@
+<div class="card bg-light text-dark w-100" style="border-radius: 1rem;">
+  <div class="card-header mb-3 text-center" style="background-color:black;">
+    <h2 class="text-uppercase text-white modal-title">{{ title }}</h2>
+  </div>
+  <div class="card-body p-5 text-center">
+    <div>
+
+      <div class="form-outline mb-4">
+        <input type="email" id="typeEmailX" class="form-control form-control-lg border" />
+        <label class="form-label text-dark" for="typeEmailX">E-mail</label>
+      </div>
+
+      <div class="form-outline mb-4">
+        <input type="password" id="typePasswordX" class="form-control form-control-lg border" />
+        <label class="form-label" for="typePasswordX">Mot de passe</label>
+      </div>
+
+      <p class="mb-5 pb-lg-2"><a href="#!">Mot de passe oublié ?</a></p>
+
+      <button class="btn btn-dark btn-lg px-5 mb-5" type="submit">{{buttonAction}}</button>
+    </div>
+
+    <div>
+      <p>{{bottomText}}
+        <a href="#!" class="fw-bold">{{choiceText}}</a>
+      </p>
+    </div>
+
+  </div>
+</div>

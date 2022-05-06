@@ -1,0 +1,46 @@
+<div *ngIf="product" class="container-fluid card my-3 mx-5 fs-5">
+    <div class="row g-0">
+        <div class="col-md-6 p-3">
+            <div class="mb-5" style="max-width: 550px;">
+                <img src="{{ product.imageUrl }}" alt="..." class="img-fluid" />
+            </div>
+            <a type="button" (click)="goBack()" class="link-dark"><i class="fas fa-arrow-left"></i><em> Retour</em></a>
+        </div>
+        <div class="col-md-6 text-end p-3">
+            <div class="card-body m-5">
+                <div class="m-3">
+                    <h2 class="card-title">{{ product.libelle }}</h2>
+                    <h4>{{ product.caracteristiques }}</h4>
+                    <h4 class="fw-bold">Prix unitaire : <span>{{ product.prixUnitaire | currency:'EUR'}}</span></h4>
+                </div>
+                <div>
+                    <form action="">
+                        <div class="m-3">
+                            <label for="quantityInput" class="form-label fw-bold">Quantité</label>
+                            <select class="form-select" id="quantityInput">
+                                <option selected>Choisissez la quantité</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <!-- <div class="form-text fw-bold text-success">En stock</div> -->
+                            <div>
+                                <div *ngIf="product.quantiteStock > 3" class="form-text fw-bold text-success">En stock</div>
+
+                                <div *ngIf="product.quantiteStock === 0" class="form-text fw-bold text-danger">Article
+                                    indisponible</div>
+                                <div *ngIf="isBetween(product.quantiteStock)" class="form-text fw-bold text-warning">Plus que
+                                    {{product.quantiteStock}} articles !</div>
+                            </div>
+
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-sm m-3">Ajouter au panier</button>
+                    </form>
+                </div>
+                <div class="mt-5">
+                    <p>{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
