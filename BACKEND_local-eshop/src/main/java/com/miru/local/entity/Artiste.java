@@ -26,11 +26,11 @@ public class Artiste {
     @Column(name = "email")
     private String email;
     @Column(name = "weblink")
-    private String weblink;
+    private String webLink;
     @Column(name = "facebook")
-    private String facebook;
+    private String facebookLink;
     @Column(name = "instagram")
-    private String instagram;
+    private String instagramLink;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "artiste")
     private Set<Produit> produits;

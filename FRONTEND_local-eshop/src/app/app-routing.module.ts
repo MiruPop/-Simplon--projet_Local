@@ -7,13 +7,16 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
 import { PresentationPageComponent } from './pages/presentation-page/presentation-page.component';
 import { ShopPageComponent } from './pages/shop-page/shop-page.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
-import { SingleProductComponent } from './pages/single-product/single-product.component';
+import { SingleProductComponent } from './pages/product-detail/single-product.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
   { path: 'product/:id', component: SingleProductComponent},
   { path: 'artist/:id', component: PresentationPageComponent},
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'home', component: LandingPageComponent },
   { path: 'about', component: AboutComponent},
+  { path: 'artists', component: AboutComponent},
   { path: 'events', component: EventsPageComponent },
   { path: 'visitOurShop', component: ShopPageComponent },
   { path: 'contact', component: ContactPageComponent },

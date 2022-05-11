@@ -7,13 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarouselComponent implements OnInit {
 images = [
-  '/assets/images/carousel2.jpg',
-  '/assets/images/carousel3.jpg',
-  '/assets/images/carousel4.jpg',
+  'https://i.postimg.cc/VkM8pMZ5/carousel2.jpg',
+  'https://i.postimg.cc/VkM8pMZ5/carousel3.jpg',
+  'https://i.postimg.cc/VkM8pMZ5/carousel4.jpg'
 ]
   constructor() { }
 
   ngOnInit(): void {
+    this.images;
   }
 
 }

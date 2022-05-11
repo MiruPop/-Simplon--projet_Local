@@ -1,8 +1,7 @@
 package com.miru.local.configuration;
 
-import com.miru.local.entity.Artiste;
-import com.miru.local.entity.Categorie;
-import com.miru.local.entity.Produit;
+import com.miru.local.entity.*;
+import com.miru.local.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -44,26 +43,22 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         // --
         HttpMethod[] unsupportedMethods = {HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE};
 
-        // disable HTTP methods for Produit: PUT, POST, DELETE
-        config.getExposureConfiguration()
-                .forDomainType(Produit.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods)))
-                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods)));
+        // désactiver les méthodes HTTP: PUT, POST, DELETE, pour rendre la BDD Read-Only
+        disableHttpMethods(Produit.class,config,unsupportedMethods);
+        disableHttpMethods(Categorie.class,config,unsupportedMethods);
+        disableHttpMethods(Artiste.class,config,unsupportedMethods);
+        disableHttpMethods(Client.class,config,unsupportedMethods);
+        disableHttpMethods(Adresse.class,config,unsupportedMethods);
 
-        // disable HTTP methods for Categorie: PUT, POST, DELETE
-        config.getExposureConfiguration()
-                .forDomainType(Categorie.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods)))
-                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods)));
-
-        // disable HTTP methods for Artiste: PUT, POST, DELETE
-        config.getExposureConfiguration()
-                .forDomainType(Artiste.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods)))
-                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods)));
-
-        // méthode interne qui permet d'exposer les identifiants de entités
+        // exposer les identifiants des entités
         exposeIds(config);
+    }
+
+    private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] unsupportedMethods) {
+        config.getExposureConfiguration()
+                .forDomainType(theClass)
+                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods));
     }
 
     private void exposeIds(RepositoryRestConfiguration config) {

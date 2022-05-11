@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white px-5">
     <div class="container-fluid">
-        <a class="navbar-brand" style="height: 100px;" routerLink="home"><img src="assets/images/local_logo.jpg"
+        <a class="navbar-brand" style="height: 100px;" routerLink="home"><img src="https://i.postimg.cc/J4HVHZLK/local-logo.jpg"
                 class="img-fluid h-100" alt="lôcal-logo" /></a>
         <button class="navbar-toggler" type="button" (click)="rightAligned.toggle()"
             aria-controls="navbarRightAlignExample" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,16 +11,29 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
                 <li class="nav-item">
                     <a routerLink="home" routerLinkActive="active" class="nav-link">
-                       <strong>Boutique en ligne</strong></a>
+                        <strong>Boutique en ligne</strong></a>
                 </li>
-                <li class="nav-item">
-                    <a routerLink="about" routerLinkActive="active" class="nav-link"><strong>Qui sommes nous ?</strong></a>
+
+                <!-- DROPDOWN "ABOUT" MENU -->
+                <li mdbDropdown class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="aboutDropdownMenuLink" role="button" mdbDropdownToggle
+                        aria-expanded="false">
+                        Qui sommes nous ?
+                    </a>
+                    <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="aboutDropdownMenuLink">
+                        <li>
+                            <a routerLink="about" routerLinkActive="active" class="dropdown-item">Le collectif</a>
+                        </li>
+                        <li>
+                            <a routerLink="about" routerLinkActive="active" class="dropdown-item">Les artistes</a>
+                        </li>
+                        <li>
+                            <a routerLink="visitOurShop" routerLinkActive="active" class="dropdown-item">Le magasin</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a routerLink="events" routerLinkActive="active" class="nav-link"><strong>Evenèments</strong></a>
-                </li>
-                <li class="nav-item">
-                    <a routerLink="visitOurShop" routerLinkActive="active" class="nav-link"><strong>Le magasin</strong></a>
                 </li>
                 <li class="nav-item">
                     <a routerLink="contact" routerLinkActive="active" class="nav-link"><strong>Contact</strong></a>
@@ -31,22 +44,31 @@
 
     </div>
 </nav>
-<nav class="navbar py-0  px-5">
-    <ul class="navbar-nav d-flex flex-row ms-auto">
+<nav class="navbar py-0 px-5">
+    <!-- SEARCH BAR -->
+    <!-- <div class="container-fluid"> -->
+    <form class="container-fluid d-flex input-group w-50 mx-0 px-0">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" />
+        <span class="input-group-text border-0" id="search-addon">
+            <i class="fas fa-search"></i>
+        </span>
+    </form>
+    <!-- </div> -->
+
+    <!-- ICON MENU -->
+    <ul class="navbar-nav d-flex flex-row ms-auto w-auto">
         <!-- Cart icon -->
         <li class="nav-item me-3 me-lg-2">
-            <a routerLink="cart" class="nav-link">
-                <i class="fas fa-shopping-cart fa-lg link-dark"></i>
-            </a>
+            <app-cart-status></app-cart-status>
         </li>
 
         <!-- Dropdown user -->
-        <li mdbDropdown class="nav-item dropdown ms-2">
-            <a class="nav-link dropdown-toggle link-dark" id="navbarDropdownMenuLink" role="button" mdbDropdownToggle
+        <li mdbDropdown class="nav-item dropdown ms-2 mt-1">
+            <a class="nav-link dropdown-toggle link-dark" id="userDropdownMenuLink" role="button" mdbDropdownToggle
                 aria-expanded="false">
                 <i class="fas fa-user fa-lg" style="color:black"></i>
             </a>
-            <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="userDropdownMenuLink">
                 <li>
                     <a class="dropdown-item" (click)="openModal()">Connexion</a>
                 </li>
@@ -60,12 +82,13 @@
         </li>
 
         <!-- Dropdown flag -->
-        <ul class="navbar-nav mx-2">
+        <ul class="navbar-nav mx-2 mt-1">
             <!-- Icon dropdown -->
             <li mdbDropdown class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle link-dark" id="navbarDropdown" role="button" mdbDropdownToggle
                     aria-expanded="false">
-                    <span class="iconify" style="margin-bottom: 4px;" data-icon="circle-flags:fr" data-width="22"></span>
+                    <span class="iconify" style="margin-bottom: 4px;" data-icon="circle-flags:fr"
+                        data-width="22"></span>
                 </a>
                 <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li>
