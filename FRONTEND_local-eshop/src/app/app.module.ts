@@ -2,16 +2,20 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
+import { Router } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // MDB Modules
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
-
+// Components
 import { ArtistsService } from './services/artists.service';
 import { ProductsService } from './services/products.service';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -33,10 +37,24 @@ import { FactureMailComponent } from './facture-mail/facture-mail.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ArtistListComponent } from './artist-list/artist-list.component';
 import { AppComponent } from './app.component';
+// Module routage
 import { AppRoutingModule } from './app-routing.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+// Autentification
+import { OKTA_CONFIG, OktaAuthModule, OktaCallbackComponent } from '@okta/okta-angular';
+import authConfig from './config/auth-config';
+import { OktaAuth } from '@okta/okta-auth-js';
+import { LoginStatusComponent } from './components/login-status/login-status.component';
+
+
+const oktaConfig = Object.assign({
+  onAuthRequired: (injector) => {
+    const router = injector.get(Router);
+    // Redirect the user to your custom login page
+    router.navigate(['/login']);
+  }
+}, authConfig.oidc);
+
+const oktaAuth = new OktaAuth(oktaConfig);
 
 
 @NgModule({
@@ -62,7 +80,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ArtistListComponent,
     CartStatusComponent,
     CheckoutComponent,
-    LoginComponent
+    LoginComponent,
+    LoginStatusComponent
   ],
   imports: [
     AppRoutingModule,
@@ -73,9 +92,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MdbCollapseModule,
     MdbDropdownModule,
     MdbModalModule,
+    OktaAuthModule,
     ReactiveFormsModule
   ],
   providers: [
+    { provide: OKTA_CONFIG, useValue: {oktaAuth} },
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     ProductsService,
     ArtistsService],

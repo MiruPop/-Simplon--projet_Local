@@ -1,0 +1,29 @@
+<div class="d-flex align-items-baseline me-3">
+    <div *ngIf="isAuthenticated && userFirstName" class="login-status-user-info">
+        Bienvenu <span class="fw-bold">{{userFirstName}}</span> !
+    </div>
+
+    <li *ngIf="!isAuthenticated" mdbDropdown class="nav-item dropdown ms-2 mt-1">
+        <a class="nav-link dropdown-toggle link-dark" id="userDropdownMenuLink" role="button" mdbDropdownToggle
+            aria-expanded="false">
+            <i class="fas fa-user-alt fa-lg" style="color:black"></i>
+        </a>
+        <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="userDropdownMenuLink">
+            <li>
+                <a routerLink="/login" class="dropdown-item">Connexion</a>
+            </li>
+        </ul>
+    </li>
+
+    <li *ngIf="isAuthenticated" mdbDropdown class="nav-item dropdown ms-2 mt-1">
+        <a class="nav-link dropdown-toggle link-dark" id="userDropdownMenuLink" role="button" mdbDropdownToggle
+            aria-expanded="false">
+            <i class="fas fa-user-check fa-lg" style="color:black"></i>
+        </a>
+        <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="userDropdownMenuLink">
+            <li>
+                <a (click)="logout()" class="dropdown-item">Déconnexion</a>
+            </li>
+        </ul>
+    </li>
+</div>
