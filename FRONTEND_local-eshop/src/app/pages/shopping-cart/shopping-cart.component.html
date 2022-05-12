@@ -1,99 +1,121 @@
-<section class="h-100 h-custom" style="background-color: #a0a0a0;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12">
-                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
-                    <div class="card-body p-0">
-                        <div class="row g-0">
-                            <!-- Left table -->
-                            <div class="col-lg-8">
-                                <div class="p-5">
-                                    <!-- Header tableau -->
-                                    <div class="d-flex justify-content-between align-items-center mb-5">
-                                        <h1 class="fw-bold mb-0 text-black">Panier</h1>
-                                        <h6 class="mb-0 text-muted"><span>3</span> items</h6>
-                                    </div>
-                                    <hr class="my-4">
-                                    <!-- Produit -->
-                                    <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                        <div class="col-md-2 col-lg-2 col-xl-2">
-                                            <img src="assets/images/elodie2.jpg" class="img-fluid rounded-3"
-                                                alt="Cotton T-shirt">
-                                        </div>
-                                        <div class="col-md-3 col-lg-3 col-xl-3">
-                                            <h6 class="text-muted">Jade</h6>
-                                            <h6 class="text-black mb-0">Pins 32x32cm</h6>
-                                        </div>
-                                        <!-- Quantity select -->
-                                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                            <button class="btn btn-outline-dark px-2"
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                            <input id="form1" min="0" name="quantity" value="1" type="number"
-                                                class="form-control form-control-sm text-center" />
-                                            <button class="btn btn-outline-dark px-2"
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <!-- Sous-total -->
-                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                            <h6 class="mb-0">5,00 €</h6>
-                                        </div>
-                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                            <a href="#!" class="text-muted"><i class="far fa-trash-alt"></i></a>
-                                        </div>
-                                    </div>
+<section class="bg-grey">
+    <div *ngIf="cartItems.length > 0;else empty_cart" class="container pt-4">
+        <div class="row">
 
-                                    <hr class="my-4">
-
-                                    <div class="pt-5">
-                                        <h6 class="mb-0">
-                                            <a href="#!" class="text-body">
-                                                <i class="fas fa-long-arrow-alt-left me-2"></i>Continuez les achats
-                                            </a>
-                                        </h6>
-                                    </div>
+            <!-- Left table -->
+            <div class="col-md-8 p-0">
+                <table class="table prod-list">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col" class="fw-bold">Produit</th>
+                            <th scope="col" class="fw-bold">Quantité</th>
+                            <th scope="col" class="fw-bold">Sous-total</th>
+                            <th scope="col" class="fw-bold">Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let tempCartItem of cartItems">
+                        <tr>
+                            <td>
+                                <div>
+                                    <img [src]="tempCartItem.imageUrl" class="img-fluid prod-thumbnail"
+                                        alt="{{ tempCartItem.libelle }}">
                                 </div>
-                            </div>
-                            <!-- Right table -->
-                            <div class="col-lg-4" style="background-color: #e5e5e5;">
-                                <div class="p-5">
-                                    <h4 class="fw-bold mb-5 mt-2 pt-1">Récapitulatif commande</h4>
-                                    <hr class="my-4">
-                                    <div class="d-flex justify-content-between mb-4">
-                                        <h5>Articles : <span>1</span></h5>
-                                        <h5>2,00 €</h5>
-                                    </div>
-                                    <!-- Choix livraison -->
-                                    <h5 class="mb-3">Livraison</h5>
-                                    <div class="mb-4 pb-2">
-                                        <select class="select">
-                                            <option value="1">Standard - <span>2,00 €</span></option>
-                                            <option value="2">Relay - <em>gratuit</em></option>
-                                            <option value="3">En magasin - <em>gratuit</em></option>
-                                        </select>
-                                    </div>
-
-                                    <hr class="my-4">
-                                    <!-- TOTAL -->
-                                    <div class="d-flex justify-content-between mb-5">
-                                        <h5 class="text-uppercase">Total :</h5>
-                                        <h5>4,00 €</h5>
-                                    </div>
-                                    <!-- Paiement -->
-                                    <!-- <button type="button" class="btn btn-dark btn-block btn-lg"
-                                        data-mdb-ripple-color="dark" (click)="openModal()">Payer</button> -->
-
-                                        <button type="button" class="btn btn-dark btn-block btn-lg"
-                                        data-mdb-ripple-color="dark" (click)="initializePayment(2)" >Procédez au paiement</button>
+                            </td>
+                            <td>
+                                <div>
+                                    <h6 class="text-muted">{{ tempCartItem.libelle }}</h6>
+                                    <h6 class="text-black mb-0">{{ tempCartItem.caracteristiques}}</h6>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <button (click)="incrementQuantity(tempCartItem)" class="btn btn-outline-dark px-1 py-0">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <div class="px-2">{{ tempCartItem.quantite }}</div>
+                                    <button (click)="decrementQuantity(tempCartItem)" class="btn btn-outline-dark px-1 py-0">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h6 class="mb-0">{{ tempCartItem.prixUnitaire * tempCartItem.quantite |
+                                        currency:'EUR'}}</h6>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <a type="button" (click)="remove(tempCartItem)" class="text-muted"><i class="far fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Right table -->
+            <div class="col-md-4 p-0">
+                <table class="table recap">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <h4 class="fw-bold">Récapitulatif commande</h4>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="d-flex justify-content-between">
+                                    <h6>Articles : <span>{{ totalQuantity }}</span></h6>
+                                    <h6>{{ totalPrice | currency:'EUR' }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-0">
+                                <h6 class="mb-2">Livraison</h6>
+                                <div>
+                                    <select class="select">
+                                        <option value="1">En magasin - <em>gratuit</em></option>
+                                        <option value="2">Standard - <em>2,00 €</em></option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- TOTAL -->
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h5 class="text-uppercase fw-bold">Total :</h5>
+                                    <h5 class=" fw-bold">{{ totalPrice | currency:'EUR' }}</h5>
+                                </div>
+                                <!-- Paiement -->
+                                <a routerLink="/checkout" type="button" class="btn btn-dark btn-block btn-lg"
+                                    data-mdb-ripple-color="dark">Payer</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+    <!-- EMPTY CART MESSAGE -->
+    <ng-template #empty_cart>
+        <div class="container p-5">
+            <div class="card d-flex flex-column align-items-center">
+                <i class="fab fa-10x fa-opencart my-5"></i>
+                <h2 class="my-5">Votre panier est tristement vide...</h2>
+                <div class="pt-5">
+                    <h6 class="mb-4">
+                        <a type="button" (click)="goBack()" class="text-body">
+                            <i class="fas fa-long-arrow-alt-left me-2"></i>Vite ! Faites vos courses !
+                        </a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <!-- </div> -->
 </section>

@@ -7,13 +7,21 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
 import { PresentationPageComponent } from './pages/presentation-page/presentation-page.component';
 import { ShopPageComponent } from './pages/shop-page/shop-page.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
-import { SingleProductComponent } from './pages/single-product/single-product.component';
+import { SingleProductComponent } from './pages/product-detail/single-product.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { LoginComponent } from './pages/login/login.component';
+import { OktaCallbackComponent } from '@okta/okta-angular';
+
 
 const routes: Routes = [
+  {path: 'login/callback', component: OktaCallbackComponent},
+  {path: 'login', component: LoginComponent},
   { path: 'product/:id', component: SingleProductComponent},
   { path: 'artist/:id', component: PresentationPageComponent},
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'home', component: LandingPageComponent },
   { path: 'about', component: AboutComponent},
+  { path: 'artists', component: AboutComponent},
   { path: 'events', component: EventsPageComponent },
   { path: 'visitOurShop', component: ShopPageComponent },
   { path: 'contact', component: ContactPageComponent },
@@ -22,7 +30,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
+  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})], // permet de revenir à position de départ quand on revient sur la page précédente
   exports: [RouterModule]
 })
 export class AppRoutingModule {

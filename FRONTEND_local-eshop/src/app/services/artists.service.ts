@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { map } from 'rxjs/operators';
 import { Observable } from "rxjs/internal/Observable";
 import { ResponseArtistesI } from '../interfaces/response-artistes-i';
-import { Artist } from "../models/artist.model";
+import { Artist } from "../models/artist";
 
 @Injectable({
     providedIn: 'root'

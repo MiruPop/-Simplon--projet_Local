@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'src/app/services/products.service';
-import { Artist } from '../../models/artist.model';
-import { Product } from '../../models/product.model';
+import { Artist } from '../../models/artist';
+import { Product } from '../../models/product';
 import { ArtistsService } from '../../services/artists.service';
 
 @Component({
@@ -12,19 +12,17 @@ import { ArtistsService } from '../../services/artists.service';
 })
 export class PresentationPageComponent implements OnInit {
 
-  artist : Artist;
+  @Input() artist : Artist;
   products: Product[];
   
   constructor(private artistService : ArtistsService,
     private productService: ProductsService,
-    private route: ActivatedRoute,
-    private router : Router) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // this.route.paramMap.subscribe(() => {
-    //   this.getArtistDetails();
-    // });
-    this.getArtistDetails();
+    this.route.paramMap.subscribe(() => {
+      this.getArtistDetails();
+    });
   }
 
   getArtistDetails() {
@@ -36,7 +34,6 @@ export class PresentationPageComponent implements OnInit {
     this.artistService.getArtistById(artistId).subscribe(
       data => {
         console.log(data);
-        // this.artist = data2;
         this.artist = data;
       }
     )
@@ -46,13 +43,7 @@ export class PresentationPageComponent implements OnInit {
         this.products = data1;
       }
     )
-  }
-
-  onNavigate(){
-     this.router.navigateByUrl(this.artist.facebookLink);
-     window.open(this.artist.facebookLink, "_blank");
-    }
     
-
+  }
 
 }

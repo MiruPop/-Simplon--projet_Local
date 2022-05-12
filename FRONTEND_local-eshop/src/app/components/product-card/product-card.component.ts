@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from '../../models/product.model';
+import { CartItem } from 'src/app/models/cart-item';
+import { CartService } from 'src/app/services/cart.service';
+import { Product } from '../../models/product';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
@@ -14,15 +16,17 @@ export class ProductCardComponent implements OnInit {
 
   buttonText: string;
 
-  constructor() { }
+  constructor(private cartService:CartService) { }
 
   ngOnInit(): void {
     this.buttonText = 'Acheter';
   }
 
-  onBuyProduct() {
-    this.buttonText = "Produit acheté";
-    alert("produit ajouté au panier");
-    this.product.quantiteStock--;
+  onAddToCart(myProduct : Product) {
+
+    // this.product.quantiteStock--;
+
+    const myCartItem : CartItem = new CartItem(myProduct);
+    this.cartService.addToCart(myCartItem);
   }
 }

@@ -1,4 +1,4 @@
-<div class="container my-5">
+<div *ngIf="artist" class="container my-5">
     <!-- IMAGE/NOM (CONTAINER - GAUCHE) -->
     <div class="row">
         <div class="col-md-4 d-flex align-items-center justify-content-center">
@@ -18,14 +18,19 @@
             <h5 class="fw-bold">
                 Contact :
             </h5>
-            <div>{{ artist.email }}</div>
-            <a target="_blank" href="{{artist.facebookLink}}" class="link-dark">Facebook
-                <i class="fas fa-external-link-alt text-muted"></i>
-            </a>
-            <div><a target="_blank" [href]="artist.webLink" class="link-dark">Page web
-                    <i class="fas fa-external-link-alt text-muted"></i>
-                </a> <span style="color: red; font-weight: bold; font-style: italic; font-size: x-large;">PROBLEME LIEN
-                    EXTERNE !!!</span>
+            <div *ngIf="artist.email">{{ artist.email }}</div>
+            <div class="mt-3">
+                <a *ngIf="artist.webLink" target="_blank" [href]="artist.webLink" class="link-dark me-3">
+                    <i class="fas fa-globe fa-2x"></i>
+                </a>
+                <a *ngIf="artist.facebookLink" target="_blank" [href]="artist.facebookLink" class="link-dark me-3">
+                    <i class="fab fa-facebook fa-2x"></i>
+                </a>
+                <a *ngIf="artist.instagramLink" target="_blank" [href]="artist.instagramLink"
+                    class="link-dark me-3">
+                    <i class="fab fa-instagram fa-2x"></i>
+                </a>
+                
             </div>
         </div>
     </div>
@@ -42,7 +47,7 @@
     </div>
 
     <!-- PRODUITS -->
-    <h2 class="text-center"><em> Toutes les créations de <span>{{ artist.nom }}</span></em></h2>
+    <h2 class="text-center mb-5"><em> Toutes les créations de <span>{{ artist.nom }}</span></em></h2>
     <div class="d-flex flex-row align-items-center justify-content-center flex-md-row flex-sm-wrap">
         <app-product-card *ngFor="let tempProduct of products" [product]="tempProduct"></app-product-card>
     </div>

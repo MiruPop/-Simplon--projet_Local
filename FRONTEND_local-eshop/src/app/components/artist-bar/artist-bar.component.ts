@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Artist } from 'src/app/models/artist.model';
+import { Artist } from 'src/app/models/artist';
 import { ArtistsService } from 'src/app/services/artists.service';
-import { Product } from '../../models/product.model';
+import { Product } from '../../models/product';
 import { ProductsService } from '../../services/products.service';
 
 @Component({

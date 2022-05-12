@@ -14,6 +14,6 @@
         </p>
         <p class="card-text text-muted">{{ product.prixUnitaire | currency: 'EUR'}} </p>
         <button type="button" class="btn" [ngClass]="[buttonText === 'Produit acheté' ? 'btn-light' : 'btn-dark']"
-            (click)="onBuyProduct()">{{ buttonText }}</button>
+            (click)="onAddToCart(product)">{{ buttonText }}</button>
     </div>
 </div>

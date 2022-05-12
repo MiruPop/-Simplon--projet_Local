@@ -4,7 +4,7 @@ import { Observable, of } from "rxjs";
 import { map } from 'rxjs/operators';
 import { ResponseProduitsArtistesI } from "../interfaces/response-produits-artistes-i";
 import { ResponseProduitsI } from "../interfaces/response-produits-i";
-import { Product } from "../models/product.model";
+import { Product } from "../models/product";
 
 @Injectable({
     providedIn: 'root'

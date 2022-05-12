@@ -1,4 +1,4 @@
-import { Artist } from "../models/artist.model";
+import { Artist } from "../models/artist";
 
 export interface ResponseArtistesI {
 
