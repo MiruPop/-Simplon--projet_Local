@@ -24,9 +24,8 @@ export class ProductCardComponent implements OnInit {
 
   onAddToCart(myProduct : Product) {
 
-    // this.product.quantiteStock--;
-
     const myCartItem : CartItem = new CartItem(myProduct);
     this.cartService.addToCart(myCartItem);
+    this.buttonText = "Produit acheté";
   }
 }
