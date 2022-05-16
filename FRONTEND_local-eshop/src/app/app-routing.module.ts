@@ -10,10 +10,12 @@ import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.compo
 import { SingleProductComponent } from './pages/product-detail/single-product.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { LoginComponent } from './pages/login/login.component';
-import { OktaCallbackComponent } from '@okta/okta-angular';
+import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
+import { MembersPageComponent } from './pages/members-page/members-page.component';
 
 
 const routes: Routes = [
+  {path: 'membres', component: MembersPageComponent, canActivate: [OktaAuthGuard]},
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent},
   { path: 'product/:id', component: SingleProductComponent},
