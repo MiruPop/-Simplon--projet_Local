@@ -11,6 +11,8 @@ import java.util.Set;
 @Data
 public class CommandeDto {
 
+    // cette classe sert à mapper les différents éléments renseignés lors
+    // d'une commande, à travers leurs classes-entité
     private Client client;
     private Adresse adresseLivraison;
     private Adresse adresseFacturation;

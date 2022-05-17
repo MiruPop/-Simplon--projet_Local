@@ -4,10 +4,10 @@ import com.miru.local.entity.Produit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@CrossOrigin("http://localhost:4200")
+@RepositoryRestResource
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
     // http://localhost:8080/api/produits/search/findByCategorieId?id={id}
     Page<Produit> findByCategorieId(@RequestParam("id") Long id, Pageable pageable);

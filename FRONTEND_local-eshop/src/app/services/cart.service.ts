@@ -49,7 +49,6 @@ export class CartService {
       existingCartItem.quantite++;
     }
     else {
-      // ajouter au tableau
       this.cartItems.push(myCartItem);
     }
 

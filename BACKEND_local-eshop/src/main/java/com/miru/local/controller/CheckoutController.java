@@ -5,7 +5,6 @@ import com.miru.local.dto.ReponseCommande;
 import com.miru.local.service.CheckoutService;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api/checkout")
 public class CheckoutController {
