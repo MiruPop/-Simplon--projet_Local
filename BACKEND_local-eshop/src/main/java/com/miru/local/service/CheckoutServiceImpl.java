@@ -24,34 +24,38 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Override
     @Transactional
     public ReponseCommande envoiCommande(CommandeDto commandeDto) {
-        // retirer les infos commande du DTO
+
         Commande commande = commandeDto.getCommande();
 
-        // génerer le n° de commande
+        // générer un n° de commande unique et aléatoire
         String numeroCommande = genererNumeroCommande();
         commande.setNumero_commande(numeroCommande);
 
-        // peupler la commande avec les produits commandés
         Set<CommandeProduit> produitsCommandes = commandeDto.getCommandeProduits();
         produitsCommandes.forEach(commande::add);
 
-        // renseigner l'adresse de livraison et facturation
         commande.setAdresseFacturation(commandeDto.getAdresseFacturation());
         commande.setAdresseLivraison(commandeDto.getAdresseLivraison());
 
         // rattacher la commande au client
         Client client = commandeDto.getClient();
+        Client existingClient = clientRepository.findClientByEmail(client.getEmail());
+
+        if(existingClient != null) {
+            client = existingClient;
+        }
+
         client.add(commande);
 
-        // sauvegarder dans la BDD
+        // sauvegarder le Client dans la BDD
+            // la Cascade produira également la sauvegarde de la commande, des adresses
+            // et des lignes de commande (CommandeProduit)
         clientRepository.save(client);
 
-        // retourner la réponse
         return new ReponseCommande(numeroCommande);
     }
 
     private String genererNumeroCommande() {
-        // générer un numéro UUID aléatoire
         return UUID.randomUUID().toString();
     }
 }
