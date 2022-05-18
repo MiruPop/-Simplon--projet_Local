@@ -23,7 +23,7 @@ public class Client {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private Set<Commande> commandes = new HashSet<>();
 
     public void add(Commande commande) {

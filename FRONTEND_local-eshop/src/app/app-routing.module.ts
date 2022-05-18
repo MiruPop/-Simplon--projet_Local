@@ -12,14 +12,19 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { LoginComponent } from './pages/login/login.component';
 import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 import { MembersPageComponent } from './pages/members-page/members-page.component';
+import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 
 
 const routes: Routes = [
-  {path: 'membres', component: MembersPageComponent, canActivate: [OktaAuthGuard]},
-  {path: 'login/callback', component: OktaCallbackComponent},
-  {path: 'login', component: LoginComponent},
-  { path: 'product/:id', component: SingleProductComponent},
-  { path: 'artist/:id', component: PresentationPageComponent},
+  // protected routes :
+  { path: 'membres', component: MembersPageComponent, canActivate: [OktaAuthGuard] },
+  { path: 'mes-commandes', component: OrderHistoryComponent, canActivate: [OktaAuthGuard] },
+
+  // general routes :
+  { path: 'login/callback', component: OktaCallbackComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'product/:id', component: SingleProductComponent },
+  { path: 'artist/:id', component: PresentationPageComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'home', component: LandingPageComponent },
   { path: 'about', component: AboutComponent},

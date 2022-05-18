@@ -24,6 +24,8 @@ export class CheckoutComponent implements OnInit {
   creditCardMonths: number[] = [];
   creditCardYears: number[] = [];
 
+  storage : Storage = sessionStorage;
+
   constructor(private formBuilder: FormBuilder,
     private formService: FormService,
     private cartService: CartService,
@@ -33,13 +35,16 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.reviewCartDetails();
 
+    // récupérer l'email utilisateur depuis le storage du navigateur
+    const emailUtilisateur = JSON.parse(this.storage.getItem('clientEmail'));
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         prenom: new FormControl('', [Validators.required, Validators.minLength(2),
         CustomValidators.notOnlyWhitespace]),
         nom: new FormControl('', [Validators.required, Validators.minLength(2),
         CustomValidators.notOnlyWhitespace]),
-        email: new FormControl('', [Validators.required,
+        email: new FormControl(emailUtilisateur, [Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       adresseLivraison: this.formBuilder.group({
@@ -172,7 +177,7 @@ export class CheckoutComponent implements OnInit {
     // mettre en place la commande
     let order = new Order();
     order.prixTotal = this.totalPrice;
-    order.prixTotal = this.totalQuantity;
+    order.quantiteTotale = this.totalQuantity;
 
     // récupérer les articles du cart
     const cartItems = this.cartService.cartItems;
@@ -197,7 +202,6 @@ export class CheckoutComponent implements OnInit {
     // appel REST Api via le CheckoutService
     this.checkoutService.placeOrder(purchase).subscribe(
       {
-        // success path
         next : response => {
           alert(`Votre commande a été envoyée.\nNuméro de commande: ${response.numeroCommande}`);
           
