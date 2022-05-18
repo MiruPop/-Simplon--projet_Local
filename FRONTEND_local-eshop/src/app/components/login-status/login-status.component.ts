@@ -14,6 +14,8 @@ export class LoginStatusComponent implements OnInit {
   isAuthenticated: boolean;
   userFirstName: string;
 
+  storage: Storage = sessionStorage;
+
   modalRef: MdbModalRef<ModalComponent> | null = null;
 
   constructor(private oktaAuthService: OktaAuthStateService,
@@ -34,11 +36,13 @@ export class LoginStatusComponent implements OnInit {
   getUserDetails() {
     if(this.isAuthenticated) {
       // récupérer les détails utilisateur (voir config-scopes="user claims")
-
-      // le nom de l'utilisateur est exposé en tant que propriété
       this.oktaAuth.getUser().then(
         result => {
+
           this.userFirstName = result.given_name;
+
+          const emailUtilisateur = result.email;
+          this.storage.setItem('clientEmail', JSON.stringify(emailUtilisateur));
         }
       )
     }

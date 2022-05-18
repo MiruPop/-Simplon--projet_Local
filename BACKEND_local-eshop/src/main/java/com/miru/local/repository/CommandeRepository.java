@@ -1,4 +1,15 @@
 package com.miru.local.repository;
 
-public interface CommandeRepository {
+import com.miru.local.entity.Commande;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource
+public interface CommandeRepository extends JpaRepository<Commande, Long> {
+
+    Page<Commande> findByClientEmailOrderByDateCreationDesc(@Param("email") String email, Pageable pageable);
+
 }

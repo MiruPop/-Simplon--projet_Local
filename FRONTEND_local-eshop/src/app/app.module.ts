@@ -45,6 +45,7 @@ import authConfig from './config/auth-config';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
 import { MembersPageComponent } from './pages/members-page/members-page.component';
+import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 
 
 const oktaConfig = Object.assign({
@@ -83,7 +84,8 @@ const oktaAuth = new OktaAuth(oktaConfig);
     CheckoutComponent,
     LoginComponent,
     LoginStatusComponent,
-    MembersPageComponent
+    MembersPageComponent,
+    OrderHistoryComponent
   ],
   imports: [
     AppRoutingModule,

@@ -20,19 +20,19 @@ public class Commande {
     @Column(name = "id")
     private Long id;
     @Column(name = "numero_commande")
-    private String numero_commande;
+    private String numeroCommande;
     @Column(name = "prix_total")
     private Double prixTotal;
     @Column(name = "quantite_totale")
     private int quantiteTotale;
+    @Column(name = "statut")
+    private String statut;
     @Column(name = "date_creation")
     @CreationTimestamp
     private Date dateCreation;
     @Column(name = "derniere_maj")
     @UpdateTimestamp
     private Date derniereMaj;
-    @Column(name = "statut")
-    private String statut;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
     private Set<CommandeProduit> commandeProduits = new HashSet<>();

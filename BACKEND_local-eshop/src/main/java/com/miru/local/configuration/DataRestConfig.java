@@ -38,9 +38,6 @@ public class DataRestConfig implements RepositoryRestConfigurer {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-        // configuration du cors mapping
-        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);
-
         // Personnaliser l'exposition des méthodes Http:
         // rendre la BDD Read-Only pour les tables exposées par Spring Data REST
         HttpMethod[] unsupportedMethods = {HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.PATCH};
@@ -48,9 +45,13 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(Produit.class,config,unsupportedMethods);
         disableHttpMethods(Categorie.class,config,unsupportedMethods);
         disableHttpMethods(Artiste.class,config,unsupportedMethods);
+        disableHttpMethods(Commande.class,config,unsupportedMethods);
 
         // exposer les identifiants des entités
         exposeIds(config);
+
+        // configuration du cors mapping
+        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);
     }
 
     private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] unsupportedMethods) {
