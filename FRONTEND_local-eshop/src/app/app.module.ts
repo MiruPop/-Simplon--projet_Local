@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
 import { Router } from '@angular/router';
@@ -12,9 +12,7 @@ import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
-// Components
-import { ArtistsService } from './services/artists.service';
-import { ProductsService } from './services/products.service';
+// Component
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
@@ -36,16 +34,22 @@ import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.compo
 import { FactureMailComponent } from './facture-mail/facture-mail.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ArtistListComponent } from './artist-list/artist-list.component';
-import { AppComponent } from './app.component';
-// Module routage
-import { AppRoutingModule } from './app-routing.module';
-// Autentification
-import { OKTA_CONFIG, OktaAuthModule, OktaCallbackComponent } from '@okta/okta-angular';
-import authConfig from './config/auth-config';
-import { OktaAuth } from '@okta/okta-auth-js';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
 import { MembersPageComponent } from './pages/members-page/members-page.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
+import { AppComponent } from './app.component';
+
+//Services
+import { ProductsService } from './services/products.service';
+
+// Module routage
+import { AppRoutingModule } from './app-routing.module';
+
+// Autentification / Autorisation
+import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
+import authConfig from './config/auth-config';
+import { OktaAuth } from '@okta/okta-auth-js';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 
 const oktaConfig = Object.assign({
@@ -100,10 +104,10 @@ const oktaAuth = new OktaAuth(oktaConfig);
     ReactiveFormsModule
   ],
   providers: [
-    { provide: OKTA_CONFIG, useValue: {oktaAuth} },
-    { provide: LOCALE_ID, useValue: 'fr-FR' },
     ProductsService,
-    ArtistsService],
+    { provide: OKTA_CONFIG, useValue: {oktaAuth} },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+    { provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

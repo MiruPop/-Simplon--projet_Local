@@ -1,6 +1,7 @@
-<h4>Vos commandes</h4>
-<br>
-<table *ngIf="orderHistoryList.length > 0;else no_orders" class="table align-middle mb-0 bg-white">
+<div class="container container-fluid my-5">
+  <h4>Vos commandes</h4>
+  <br>
+  <table *ngIf="orderHistoryList.length > 0;else no_orders" class="table align-middle mb-0 bg-white">
     <thead class="bg-light">
       <tr>
         <th>Numéro commande</th>
@@ -11,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr  *ngFor="let order of orderHistoryList">
+      <tr *ngFor="let order of orderHistoryList">
         <td>
           <div class="d-flex align-items-center">
             <div class="ms-3">
@@ -26,8 +27,8 @@
           <p class="fw-normal mb-1">{{ order.prixTotal | currency:'EUR' }}</p>
         </td>
         <td>
-            <p class="fw-normal mb-1">{{ order.dateCreation | date:'medium' }}</p>
-          </td>
+          <p class="fw-normal mb-1">{{ order.dateCreation | date:'medium' }}</p>
+        </td>
         <td>
           <span class="badge badge-success rounded-pill d-inline">{{ order.statut }}</span>
         </td>
@@ -38,15 +39,16 @@
   <!-- NO ORDERS MESSAGE -->
   <ng-template #no_orders>
     <div class="container p-5">
-        <div class="card d-flex flex-column align-items-center">
-            <h2 class="my-5">Vous n'avez aucune commande</h2>
-            <div class="pt-5">
-                <h6 class="mb-4">
-                    <a type="button" (click)="goBack()" class="text-body">
-                        <i class="fas fa-long-arrow-alt-left me-2"></i>Visitez notre boutique
-                    </a>
-                </h6>
-            </div>
+      <div class="card d-flex flex-column align-items-center">
+        <h2 class="my-5">Vous n'avez aucune commande</h2>
+        <div class="pt-5">
+          <h6 class="mb-4">
+            <a type="button" (click)="goBack()" class="text-body">
+              <i class="fas fa-long-arrow-alt-left me-2"></i>Visitez notre boutique
+            </a>
+          </h6>
         </div>
+      </div>
     </div>
-</ng-template>
+  </ng-template>
+</div>

@@ -10,7 +10,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // sécuriser l'endpoint /api/commandes
+
         http.authorizeRequests()
                 .antMatchers("/api/commandes/**")
                 .authenticated()
@@ -18,10 +18,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .oauth2ResourceServer()
                 .jwt();
 
-        // ajouter des filtres CORS
+        // ajouter les filtres CORS
         http.cors();
 
-        // ajouter une réponse en cas de requête non autorisée - fournie par Okta
+        // afficher une reponse dans body pour les Erreurs 401
         Okta.configureResourceServer401ResponseBody(http);
+
+        // désactiver CSRF pour pouvoir envoyer des requêtes POST
+        // (car nous n'utilisons pas des Cookies de traçage de la Session)
+        http.csrf().disable();
     }
 }
