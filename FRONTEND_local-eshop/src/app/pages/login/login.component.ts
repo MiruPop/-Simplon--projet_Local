@@ -26,6 +26,9 @@ export class LoginComponent implements OnInit {
       i18n: {
         fr: {
           'primaryauth.title': 'Connectez-vous à votre Lôcal !',
+          'primaryauth.username.placeholder': 'Adresse e-mail',
+          'primaryauth.username.tooltip': 'Renseigner votre adresse mail',
+          'error.username.required': 'Veuillez renseigner l\'adresse mail',
           'country.FR': 'France, edited'
         }
       },
@@ -34,7 +37,7 @@ export class LoginComponent implements OnInit {
         pkce: true,
         issuer: authConfig.oidc.issuer,
         scopes: authConfig.oidc.scopes
-      }
+      },
     });
   }
 
@@ -43,14 +46,14 @@ export class LoginComponent implements OnInit {
 
     this.oktaSignin.renderEl(
       {
-        el: '#okta-sign-in-widget'   // #id de la <div> contenant le widget
+        el: '#widget-container'   // #id de la <div> contenant le widget
       },
-      (response : any) => {
+      (response: any) => {
         if (response.status === 'SUCCESS') {
           this.oktaAuth.signInWithRedirect();
         }
       },
-      (error : any) => {
+      (error: any) => {
         throw error;
       });
   }

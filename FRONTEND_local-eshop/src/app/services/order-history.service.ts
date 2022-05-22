@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ResponseOrderHistoryI } from '../interfaces/response-order-history-i';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { ResponseOrderHistoryI } from '../interfaces/response-order-history-i';
 })
 export class OrderHistoryService {
 
-  private orderUrl = "http://localhost:8080/api/commandes";
+  private orderUrl = environment.LOCAL_API_URL + '/commandes';
 
   constructor(private httpClient: HttpClient) { }
 

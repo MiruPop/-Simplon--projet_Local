@@ -26,6 +26,7 @@
     "autoprefixer": "10.4.5",
     "mdb-angular-ui-kit": "file:mdb-angular-ui-kit-2.0.0.tgz",
     "rxjs": "~6.6.0",
+    "stripe": "^9.2.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"
   },

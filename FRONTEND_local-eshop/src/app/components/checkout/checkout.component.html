@@ -230,101 +230,16 @@
                     </div>
                 </div>
 
-                <!-- Form group CARTE CREDIT -->
+                <!-- CARTE CREDIT - STRIPE ELEMENT -->
                 <div formGroupName="creditCard" class="form-area">
-                    <h5>Carte de crédit</h5>
-                    <div class="row">
-                        <div class="col-md-2"><label>Type carte</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="cardType" class="pe-1">
-                                    <option>Visa</option>
-                                    <option>Mastercard</option>
-                                </select>
-                                <!-- validation - message erreur -->
-                                <div *ngIf="cardType.invalid && (cardType.dirty || cardType.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="cardType.errors.required">
-                                        Le type de carte est obligatoire
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <h4>Carte de paiement</h4>
+
+                    <div id="card-element">
+                        <!-- injection de l'élément Stripe ici -->
                     </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>Détenteur</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="nameOnCard" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="cardName.invalid && (cardName.dirty || cardName.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="cardName.errors.required || cardName.errors.notOnlyWhitespace">
-                                        Le nom sur la carte est obligatoire
-                                    </div>
-                                    <div *ngIf="cardName.errors.minlength">
-                                        Le nom sur la carte doit comporter minimum 2 lettres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>N° carte</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="cardNumber" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="cardNumber.invalid && (cardNumber.dirty || cardNumber.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="cardNumber.errors.required">
-                                        Le n° de carte est obligatoire
-                                    </div>
-                                    <div *ngIf="cardNumber.errors.pattern">
-                                        Le n° de carte doit être composé de 16 chiffres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>Mois expiration</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="expirationMonth" class="pe-1">
-                                    <option *ngFor="let month of creditCardMonths">{{ month }}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>Année expiration</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="expirationYear" class="pe-1" (change)="handleMonthsYears()">
-                                    <option *ngFor="let year of creditCardYears">{{ year }}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>CCV</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="securityCode" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="cardCcv.invalid && (cardCcv.dirty || cardCcv.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="cardCcv.errors.required">
-                                        Le CCV est obligatoire
-                                    </div>
-                                    <div *ngIf="cardCcv.errors.pattern">
-                                        Le CCV doit être composé de 3 chiffres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                    <!-- affichage en cas d'erreur -->
+                    <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
                 </div>
 
                 <!-- Détails commande -->
@@ -337,7 +252,7 @@
 
                 <!-- bouton SUBMIT -->
                 <div class="text-center">
-                    <button type="submit" class="btn btn-dark">Acheter</button>
+                    <button type="submit" class="btn btn-dark" [disabled]="isDisabled">Acheter</button>
                 </div>
             </form>
 

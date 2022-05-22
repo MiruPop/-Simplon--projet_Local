@@ -3,11 +3,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Order } from 'src/app/models/order';
 import { OrderProduct } from 'src/app/models/order-product';
+import { PaymentInfo } from 'src/app/models/payment-info';
 import { Purchase } from 'src/app/models/purchase';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
-import { FormService } from 'src/app/services/form.service';
 import { CustomValidators } from 'src/app/validators/custom-validators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -24,15 +25,24 @@ export class CheckoutComponent implements OnInit {
   creditCardMonths: number[] = [];
   creditCardYears: number[] = [];
 
-  storage : Storage = sessionStorage;
+  storage: Storage = sessionStorage;
+
+  // initialisation de l'API STripe
+  stripe = Stripe(environment.STRIPE_PUBLIC_KEY);
+  paymentInfo: PaymentInfo = new PaymentInfo();
+  cardElement: any;
+  displayError: any = "";
+
+  isDisabled: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
-    private formService: FormService,
     private cartService: CartService,
     private checkoutService: CheckoutService,
     private router: Router) { }
 
   ngOnInit(): void {
+
+    this.setupStripePaymentForm();
     this.reviewCartDetails();
 
     // récupérer l'email utilisateur depuis le storage du navigateur
@@ -67,21 +77,8 @@ export class CheckoutComponent implements OnInit {
         CustomValidators.notOnlyWhitespace])
       }),
       creditCard: this.formBuilder.group({
-        cardType: new FormControl('', [Validators.required]),
-        nameOnCard: new FormControl('', [Validators.required, Validators.minLength(2),
-        CustomValidators.notOnlyWhitespace]),
-        cardNumber: new FormControl('', [Validators.required,
-        Validators.pattern('[0-9]{16}')]),
-        expirationMonth: [''],
-        expirationYear: [''],
-        securityCode: new FormControl('', [Validators.required,
-        Validators.pattern('[0-9]{3}')]),
       }),
     });
-
-    // peupler les mois/années de la carte de crédit
-    this.fillCcMonths();
-    this.fillCcYears();
 
   }
 
@@ -100,10 +97,33 @@ export class CheckoutComponent implements OnInit {
   get codePostalFacturation() { return this.checkoutFormGroup.get('adresseFacturation.codePostal'); }
   get paysFacturation() { return this.checkoutFormGroup.get('adresseFacturation.pays'); }
 
-  get cardType() { return this.checkoutFormGroup.get('creditCard.cardType'); }
-  get cardName() { return this.checkoutFormGroup.get('creditCard.nameOnCard'); }
-  get cardNumber() { return this.checkoutFormGroup.get('creditCard.cardNumber'); }
-  get cardCcv() { return this.checkoutFormGroup.get('creditCard.securityCode'); }
+  
+  // charger le formulaire de paiement Stripe
+  setupStripePaymentForm() {
+
+    var elements = this.stripe.elements();
+
+    // créer un élément "carte", le personnaliser en cachant le champ "postal-code",
+    // car celui-ci est collecté dans le champ 'adresse'
+    this.cardElement = elements.create('card', { hidePostalCode: true });
+
+    // injecter une instance de l'élément dans la <div> 'card-element'
+    this.cardElement.mount('#card-element')
+
+    // event binding pour les event='change' (VALIDATION) dans le composant de paiement
+    this.cardElement.on('change', (event) => {
+      // récupérer l'élément d'affichage des erreurs
+      this.displayError = document.getElementById('card-errors');
+
+      if (event.complete) {
+        this.displayError.textContent = "";
+      }
+      else if (event.error) {
+        this.displayError.textContent = event.error.message;
+      }
+    })
+
+  }
 
   // souscrire aux dernières valeurs totales calculés par le cartService
   reviewCartDetails() {
@@ -115,44 +135,6 @@ export class CheckoutComponent implements OnInit {
       data => {
         this.totalPrice = data
       });
-  }
-
-  // pré-remplissage mois / années dans "expiration carte crédit"
-  fillCcMonths() {
-    const startMonth: number = new Date().getMonth() + 1;
-    this.formService.getCreditCardMonths(startMonth).subscribe(
-      data => {
-        this.creditCardMonths = data;
-      }
-    )
-  }
-  fillCcYears() {
-    this.formService.getCreditCardYears().subscribe(
-      data => {
-        this.creditCardYears = data;
-      }
-    )
-  }
-  // si l'année séléctionnée = année courante => commencer avec le mois courant
-  // sinon, commencer avec le 1er mois
-  handleMonthsYears() {
-    const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
-    const currentYear: number = new Date().getFullYear();
-    const selectedYear: number = Number(creditCardFormGroup.value.expirationYear);
-
-    let startMonth: number;
-    if (currentYear === selectedYear) {
-      startMonth = new Date().getMonth() + 1;
-    }
-    else {
-      startMonth = 1;
-    }
-
-    this.formService.getCreditCardMonths(startMonth).subscribe(
-      data => {
-        this.creditCardMonths = data;
-      }
-    );
   }
 
   // checkbox pour remplir l'adresse de facturation avec les mêmes données que l'adresse de livraison
@@ -199,27 +181,77 @@ export class CheckoutComponent implements OnInit {
     purchase.commande = order;
     purchase.commandeProduits = orderProducts;
 
-    // appel REST Api via le CheckoutService
-    this.checkoutService.placeOrder(purchase).subscribe(
-      {
-        next : response => {
-          alert(`Votre commande a été envoyée.\nNuméro de commande: ${response.numeroCommande}`);
-          
-          this.resetCart();
-        },
-        // error/exception path
-        error : erreur => {
-          alert(`Erreur: ${erreur.message}`);
-        }
-      }
-    );
+    // calculer la somme totale en centimes (imposé par le fonctionnement Stripe)
+    this.paymentInfo.montant = Math.round(this.totalPrice * 100);
+    this.paymentInfo.devise = "EUR";
+
+    // si le formulaire est validé, créer l'objet paymentIntent,
+    // confirmer le paiement par carte et envoyer la commande
+    if(!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
+      this.isDisabled = true;
+
+      this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
+        (paymentIntentResponse) => {
+          // les données sont envoyées directement sur les serveurs Stripe
+          // https://stripe.com/docs/js/payment_intents/payment_method
+          this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
+            {
+              payment_method: {
+                card: this.cardElement,
+                billing_details: {
+                  email: purchase.client.email,
+                  name: `${purchase.client.prenom} ${purchase.client.nom}`,
+                  address: {
+                    line1: purchase.adresseFacturation.rue,
+                    city: purchase.adresseFacturation.ville,
+                    postal_code: purchase.adresseFacturation.codePostal,
+                    country: purchase.adresseFacturation.pays
+                  }
+                }
+              },
+            },
+            {
+              handleActions: false
+            })
+            .then(function(result) {
+              // valider l'envoi des informations de paiement
+              if(result.error) {
+                alert(`Une erreur s'est produite : ${result.error.message}`);
+                this.isDisabled = false;
+              }
+              else {
+                // appel API via le CheckoutService
+                this.checkoutService.placeOrder(purchase).subscribe({
+                  // valider l'envoi de la commande
+                  next: response => {
+                    alert(`Votre commande a été envoyée.\nNuméro de commande: ${response.numeroCommande}`)
+                    this.resetCart();
+                    this.isDisabled = false;
+                  },
+                  error: err => {
+                    alert(`Une erreur s'est produite : ${err.message}`);
+                    this.isDisabled = false;
+                  }
+                });
+              }
+            }.bind(this));
+        });
+    }
+    else {
+      this.checkoutFormGroup.markAllAsTouched();
+      return;
+    }
 
   }
+
+  // méthode utilitaire
   resetCart() {
     // supprimer infos shopping cart
     this.cartService.cartItems = [];
     this.cartService.totalPrice.next(0);
     this.cartService.totalQuantity.next(0);
+    //màj le storage avec le dernier état du cart = vides
+    this.cartService.persistCartItems();
 
     //supprimer infos formulaire
     this.checkoutFormGroup.reset();
