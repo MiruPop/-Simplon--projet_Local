@@ -4,13 +4,14 @@ import { map } from 'rxjs/operators';
 import { Observable } from "rxjs/internal/Observable";
 import { ResponseArtistesI } from '../interfaces/response-artistes-i';
 import { Artist } from "../models/artist";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ArtistsService {
 
-    private artistUrl = 'http://localhost:8080/api/artistes';
+    private artistUrl = environment.LOCAL_API_URL + '/artistes';
 
     constructor(private httpClient: HttpClient) {};
 

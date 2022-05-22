@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { map } from 'rxjs/operators';
+import { environment } from "src/environments/environment";
 import { ResponseProduitsArtistesI } from "../interfaces/response-produits-artistes-i";
 import { ResponseProduitsI } from "../interfaces/response-produits-i";
 import { Product } from "../models/product";
@@ -11,8 +12,8 @@ import { Product } from "../models/product";
   })
   export class ProductsService {
 
-    private baseUrl = 'http://localhost:8080/api'
-    private productUrl = 'http://localhost:8080/api/produits';
+    private baseUrl = environment.LOCAL_API_URL
+    private productUrl = environment.LOCAL_API_URL + '/produits';
 
     // products : Product[] = [
     //     {
