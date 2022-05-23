@@ -1,19 +1,11 @@
-.caption-card .card-up {
-    height: 120px;
+.crop {
+    width: 288px;
+    height: 288px;
     overflow: hidden;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
 }
 
-.caption-card {
+.crop img {
     width: 400px;
-}
-
-.avatar img {
-    width: 200px;
-    height: 200px;
-    margin-top: -60px;
-    overflow: hidden;
-    border: 3px solid #fff;
-    border-radius: 50%;
+    height: 400px;
+    margin: -50px 0px 0px -50px;
 }

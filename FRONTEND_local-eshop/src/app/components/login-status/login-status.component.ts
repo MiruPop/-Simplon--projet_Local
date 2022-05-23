@@ -64,6 +64,8 @@ export class LoginStatusComponent implements OnInit {
   logout() {
     // terminer la session courante et détruire les tokens
     this.oktaAuth.signOut();
+    // nettoyer le stockage de la Session
+    this.storage.clear();
   }
 
 }
