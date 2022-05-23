@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartItem } from 'src/app/models/cart-item';
 import { CartService } from 'src/app/services/cart.service';
 import { Location } from '@angular/common';
+import { OktaAuthStateService } from '@okta/okta-angular';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -10,17 +11,24 @@ import { Location } from '@angular/common';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  // paymentHandler:any = null;
+  isAuthenticated: boolean;
+
   cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0;
- 
-  constructor(private cartService: CartService,
-    private location:Location) { }
+
+  constructor(private oktaAuthService: OktaAuthStateService,
+    private cartService: CartService,
+    private location: Location) { }
 
   ngOnInit(): void {
+
+    this.oktaAuthService.authState$.subscribe(
+      result => {
+        this.isAuthenticated = result.isAuthenticated;
+      });
+
     this.listCartDetails();
-    // this.invokeStripe();
   }
 
   listCartDetails() {
@@ -41,15 +49,19 @@ export class ShoppingCartComponent implements OnInit {
     this.cartService.computeCartTotals();
   }
 
-  
-  incrementQuantity(myCartItem:CartItem) {
+
+  incrementQuantity(myCartItem: CartItem) {
     this.cartService.addToCart(myCartItem);
   }
-  decrementQuantity(myCartItem:CartItem) {
+  decrementQuantity(myCartItem: CartItem) {
     this.cartService.decrementQuantity(myCartItem);
   }
-  remove(myCartItem:CartItem) {
+  remove(myCartItem: CartItem) {
     this.cartService.remove(myCartItem);
   }
 
- }
+  goBack(): void {
+    this.location.back();
+  }
+
+}

@@ -92,7 +92,7 @@
                                     <h5 class=" fw-bold">{{ totalPrice | currency:'EUR' }}</h5>
                                 </div>
                                 <!-- Paiement -->
-                                <a routerLink="/checkout" type="button" class="btn btn-dark btn-block btn-lg"
+                                <a [routerLink]="isAuthenticated? '/checkout' : '/login' " type="button" class="btn btn-dark btn-block btn-lg"
                                     data-mdb-ripple-color="dark">Passer commande</a>
                             </td>
                         </tr>

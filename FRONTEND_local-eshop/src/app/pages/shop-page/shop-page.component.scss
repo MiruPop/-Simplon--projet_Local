@@ -1,0 +1,17 @@
+.crop {
+    width: 288px;
+    height: 288px;
+    overflow: hidden;
+}
+
+.crop img {
+    width: 400px;
+    height: 400px;
+    margin: -50px 0px 0px -50px;
+}
+
+@media (max-width:992px) {
+    .address {
+        padding-top: 20px;
+    }
+}

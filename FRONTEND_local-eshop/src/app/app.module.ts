@@ -22,7 +22,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ModalComponent } from './components/modal/modal.component';
 import { PaymentModalComponent } from './components/payment-modal/payment-modal.component';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
-import { CheckoutComponent } from './components/checkout/checkout.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AboutComponent } from './pages/about/about.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { EventsPageComponent } from './pages/events-page/events-page.component';
@@ -50,6 +50,7 @@ import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
 import authConfig from './config/auth-config';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { ArtistsPageComponent } from './pages/artists-page/artists-page.component';
 
 
 const oktaConfig = Object.assign({
@@ -89,7 +90,8 @@ const oktaAuth = new OktaAuth(oktaConfig);
     LoginComponent,
     LoginStatusComponent,
     MembersPageComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    ArtistsPageComponent
   ],
   imports: [
     AppRoutingModule,
