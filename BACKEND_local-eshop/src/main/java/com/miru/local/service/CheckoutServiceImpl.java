@@ -59,8 +59,8 @@ public class CheckoutServiceImpl implements CheckoutService {
         client.add(commande);
 
         // sauvegarder le Client dans la BDD
-            // la Cascade produira également la sauvegarde de la commande, des adresses
-            // et des lignes de commande (CommandeProduit)
+            // grâce aux clés étrangères, la Cascade produira également la sauvegarde de la commande,
+            // des adresses et des lignes de commande (CommandeProduit)
         clientRepository.save(client);
 
         return new ReponseCommande(numeroCommande);

@@ -12,8 +12,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/api/commandes/**")
-                .authenticated()
+                .antMatchers("/api/commandes/**").authenticated()
+                .antMatchers("/api/checkout/**").authenticated()
                 .and()
                 .oauth2ResourceServer()
                 .jwt();
