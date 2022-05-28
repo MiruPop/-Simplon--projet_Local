@@ -1,7 +1,6 @@
 package com.miru.local.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,6 +9,9 @@ import java.util.Set;
 @Table(name = "artiste")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Artiste {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

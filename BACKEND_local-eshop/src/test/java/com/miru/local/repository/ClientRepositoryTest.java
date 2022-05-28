@@ -1,20 +1,19 @@
 package com.miru.local.repository;
 
-import com.miru.local.configuration.DataSourceConfig;
 import com.miru.local.entity.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 
 import static com.miru.local.Fixtures.someClient;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
-@ContextConfiguration(classes = {DataSourceConfig.class})
 @DataJpaTest
+@TestPropertySource(locations = "classpath:application-test.properties")
 class ClientRepositoryTest {
 
     private Client client = someClient();
