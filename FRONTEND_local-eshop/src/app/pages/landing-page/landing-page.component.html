@@ -1,6 +1,18 @@
 <app-carousel></app-carousel>
 <div class="container my-5">
-    <h1>NOS ARTISTES A LA UNE...</h1>
-    <h5>Découvres les artistes du collectif et leurs créations.</h5>
+    <!-- SEPARATEUR -->
+    <div class="row m-5">
+        <div class="col-md-5">
+            <hr>
+        </div>
+        <div class="col-md-2 text-center"><i class="fas fa-angle-double-down"></i></div>
+        <div class="col-md-5">
+            <hr>
+        </div>
+    </div>
+    <div class="text-center">
+        <h1>NOS ARTISTES A LA UNE...</h1>
+        <h3>Découvres les artistes du collectif et leurs créations.</h3>
+    </div>
 </div>
 <app-artist-bar *ngFor="let tempArtist of artists" [artist]="tempArtist"></app-artist-bar>
