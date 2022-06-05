@@ -13,7 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 class BackendLocalEshopApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void contextLoads_should_load_contexts() {
 	}
 
 }

@@ -26,17 +26,19 @@ class ArtisteRepositoryTest {
     }
 
     @Test
-    void findByNomContaining() {
+    void findByNomContaining_shoud_return_expected_artist() {
     // GIVEN
         String keyword = "art";
     // WHEN
         Artiste expected = artisteRepository.findByNomContaining(keyword);
     // THEN
-        assertThat(expected).usingRecursiveComparison().isEqualTo(artiste);
+        assertThat(expected).usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(artiste);
     }
 
     @Test
-    void findByActiviteContaining() {
+    void findByActiviteContaining_shoud_return_expected_artist() {
     // GIVEN
         String keyword = "art";
     // WHEN

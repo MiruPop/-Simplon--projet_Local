@@ -42,6 +42,7 @@ public class Fixtures {
                 .artiste(someArtist())
                 .build();
     }
+
     public static Livraison someDeliveryType() {
         return Livraison.builder()
                 .id(Long.valueOf(1))

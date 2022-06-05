@@ -38,7 +38,7 @@ public class Commande {
     private LocalDateTime derniereMaj;
 
     @OneToMany(mappedBy = "commande")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Set<CommandeProduit> commandeProduits = new HashSet<>();
 
     @ManyToOne
@@ -46,12 +46,12 @@ public class Commande {
     private Client client;
 
     @OneToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "adresse_facturation_id", referencedColumnName = "id")
     private Adresse adresseFacturation;
 
     @OneToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "adresse_livraison_id", referencedColumnName = "id")
     private Adresse adresseLivraison;
 

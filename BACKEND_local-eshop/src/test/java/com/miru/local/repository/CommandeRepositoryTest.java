@@ -2,6 +2,7 @@ package com.miru.local.repository;
 
 import com.miru.local.entity.Client;
 import com.miru.local.entity.Commande;
+import com.miru.local.entity.CommandeProduit;
 import com.miru.local.entity.Livraison;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CommandeRepositoryTest {
 
     private Livraison livraison = someDeliveryType();
+    private CommandeProduit cp1 = contentOfFirstOrder().stream().findFirst().get();
+    private CommandeProduit cp2 = contentOfSecondOrder().stream().findFirst().get();
+
     private Commande premiereCommande = firstOrder();
     private Commande deuxiemeCommande = secondOrder();
     private Client client = someClient();
@@ -31,14 +35,19 @@ class CommandeRepositoryTest {
     @Autowired
     LivraisonRepository livraisonRepository;
     @Autowired
+    CommandeProduitRepository commandeProduitRepository;
+    @Autowired
     CommandeRepository commandeRepository;
 
     @BeforeEach
     void setUp() {
 
         livraisonRepository.save(livraison);
+        commandeProduitRepository.save(cp1);
+        commandeProduitRepository.save(cp2);
         this.premiereCommande.setClient(this.client);
         this.client.getCommandes().add(this.premiereCommande);
+        clientRepository.save(client);
         this.deuxiemeCommande.setClient(this.client);
         this.client.getCommandes().add(this.deuxiemeCommande);
         clientRepository.save(client);
@@ -58,9 +67,8 @@ class CommandeRepositoryTest {
         String email = client.getEmail();
 
         // WHEN
-        Page<Commande> expectedCommandes = commandeRepository
+        Page<Commande> expectedCommandes = this.commandeRepository
                 .findByClientEmailOrderByDateCreationDesc(email, Pageable.ofSize(10));
-
         // THEN
         assertThat(expectedCommandes.getNumberOfElements())
                 .isEqualTo(2);

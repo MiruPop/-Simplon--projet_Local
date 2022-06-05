@@ -28,14 +28,11 @@ import static org.mockito.BDDMockito.given;
 @TestPropertySource(locations = "classpath:application-test.properties")
 @ExtendWith(MockitoExtension.class)
 class CheckoutServiceImplTest {
-
     private CommandeDto achat = commandeDto();
     @Value("${stripe.key.secret}")
     private String cleApiStripe;
     private Client client = someClient();
 
-    //    @Autowired
-//    private ClientRepository clientRepository;
     @Mock
     private ClientRepository clientRepository;
     @InjectMocks
@@ -45,10 +42,6 @@ class CheckoutServiceImplTest {
     void setUp() {
         this.clientRepository.save(client);
     }
-
-//    @AfterEach
-//    void tearDown() {
-//    }
 
     @Test
     void envoiCommande_should_return_expected_response() {
@@ -60,8 +53,7 @@ class CheckoutServiceImplTest {
         ReponseCommande expectedResponse = service.envoiCommande(commandeDto());
         String expectedOrderNumber = this.clientRepository.findClientByEmail(email)
                 .getCommandes()
-                .stream()
-                .findFirst().get()
+                .stream().findFirst().get()
                 .getNumeroCommande();
 
         // THEN
