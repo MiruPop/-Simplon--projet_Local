@@ -83,6 +83,7 @@ select{
         padding-bottom:100px
     }
     .section-content-p30{
+        width: 95%;
         padding:0
     }
     .section-content.section-content-p30.e-spc{
@@ -92,11 +93,18 @@ select{
 }
 
 @media (max-width:767px) {
+    .section-content-p30{
+        width: 95%;
+        padding:0
+    }
     .main-content.page-m{
-        padding:10% 0!important
+        padding:5% 0!important
     }
     .section-content.section-content-p30.e-spc{
         padding-top:100px;
         width: 95%;
+    }
+    .form-area{
+        padding:10px 10px;
     }
 }
