@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
-    // classe de configuration des contrôleurs REST
     @Value("${allowed.origins}")
     private String[] allowedOrigins;
 
@@ -16,6 +15,7 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry cors) {
-        cors.addMapping(basePath + "/**").allowedOrigins(allowedOrigins);
+        cors.addMapping(basePath + "/**")
+                .allowedOrigins(allowedOrigins);
     }
 }

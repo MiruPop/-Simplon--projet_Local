@@ -3,6 +3,8 @@ import { CartItem } from 'src/app/models/cart-item';
 import { CartService } from 'src/app/services/cart.service';
 import { Location } from '@angular/common';
 import { OktaAuthStateService } from '@okta/okta-angular';
+import { Delivery } from 'src/app/models/delivery';
+import { DeliveriesService } from 'src/app/services/deliveries.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -16,26 +18,42 @@ export class ShoppingCartComponent implements OnInit {
   cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0;
+  
+  selectedDelivery: Delivery = new Delivery();
+  deliveryModes: Delivery[] = [];
+
+  // globalPrice: number = 0;
+
+  storage: Storage = sessionStorage;
 
   constructor(private oktaAuthService: OktaAuthStateService,
     private cartService: CartService,
+    private deliveryService: DeliveriesService,
     private location: Location) { }
 
   ngOnInit(): void {
-
     this.oktaAuthService.authState$.subscribe(
       result => {
         this.isAuthenticated = result.isAuthenticated;
       });
 
+    this.getDeliveryModes();
+
     this.listCartDetails();
+  }
+
+
+  getDeliveryModes() {
+    
+    this.deliveryService.getDeliveryTypes().subscribe(
+      data => {
+        this.deliveryModes = data
+      });
   }
 
   listCartDetails() {
     // récupérer les articles du cart
     this.cartItems = this.cartService.cartItems;
-
-    // souscrire au totalPrice
     this.cartService.totalPrice.subscribe(
       data => this.totalPrice = data
     );
@@ -62,6 +80,11 @@ export class ShoppingCartComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  onChange() {
+        this.storage.setItem('delivery', JSON.stringify(this.selectedDelivery));
+        console.log(this.selectedDelivery);
   }
 
 }

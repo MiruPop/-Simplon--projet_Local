@@ -20,9 +20,7 @@ import java.util.Set;
 public class DataRestConfig implements RepositoryRestConfigurer {
 
     // Classe de configuration du Spring Data REST pour :
-        // - CORS mapping
-        // - rendre certaines tables de la base de données Read-Only (sinon, Spring Boot
-        // REST API expose librement les endpoints pour le CRUD)
+        // - rendre certaines tables de la base de données Read-Only
         // - exposer les id des entités
 
     @Value("${allowed.origins}")
@@ -31,8 +29,8 @@ public class DataRestConfig implements RepositoryRestConfigurer {
     private EntityManager entityManager;
 
     @Autowired
-    public DataRestConfig (EntityManager theEntityManager) {
-        entityManager = theEntityManager;
+    public DataRestConfig (EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
 
@@ -46,6 +44,7 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(Categorie.class,config,unsupportedMethods);
         disableHttpMethods(Artiste.class,config,unsupportedMethods);
         disableHttpMethods(Commande.class,config,unsupportedMethods);
+        disableHttpMethods(Livraison.class,config,unsupportedMethods);
 
         // exposer les identifiants des entités
         exposeIds(config);
@@ -54,16 +53,14 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);
     }
 
-    private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] unsupportedMethods) {
+    private void disableHttpMethods(Class clazz, RepositoryRestConfiguration config, HttpMethod[] unsupportedMethods) {
         config.getExposureConfiguration()
-                .forDomainType(theClass)
+                .forDomainType(clazz)
                 .withItemExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods))
                 .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedMethods));
     }
 
     private void exposeIds(RepositoryRestConfiguration config) {
-
-        // exposer les identifiants des entités
 
         // - obtenir liste de toutes les classes entity depuis l'entity manager
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();

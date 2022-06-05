@@ -22,10 +22,12 @@ const routes: Routes = [
   { path: 'mes-commandes', component: OrderHistoryComponent, canActivate: [OktaAuthGuard] },
   { path: 'checkout', component: CheckoutComponent, canActivate: [OktaAuthGuard] },
 
-  // general routes :
-  { path: 'cart', component: ShoppingCartComponent },
+  //Okta callback & login
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
+  
+  // general routes :
+  { path: 'cart', component: ShoppingCartComponent },
   { path: 'product/:id', component: SingleProductComponent },
   { path: 'artist/:id', component: PresentationPageComponent },
   { path: 'home', component: LandingPageComponent },

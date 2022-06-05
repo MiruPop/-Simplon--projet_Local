@@ -1,6 +1,7 @@
 package com.miru.local.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -34,7 +35,8 @@ public class Artiste {
     @Column(name = "instagram")
     private String instagramLink;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "artiste")
+    @OneToMany(mappedBy = "artiste")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Produit> produits;
 
 }

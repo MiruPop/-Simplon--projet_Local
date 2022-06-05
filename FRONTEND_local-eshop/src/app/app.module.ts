@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 // MDB Modules
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
@@ -103,7 +104,8 @@ const oktaAuth = new OktaAuth(oktaConfig);
     MdbDropdownModule,
     MdbModalModule,
     OktaAuthModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     ProductsService,

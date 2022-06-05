@@ -246,8 +246,8 @@
                 <div class="form-area">
                     <h5>Récapitulatif commande:</h5>
                     <p>Nombre total articles : {{ totalQuantity }}</p>
-                    <p>Livraison : GRATUIT</p>
-                    <p>Prix total : {{ totalPrice | currency:'EUR' }}</p>
+                    <p>Livraison : {{ delivery?.type }}, prix: {{ delivery?.prix }}</p>
+                    <p>Prix total : {{ totalPrice + delivery?.prix | currency:'EUR' }}</p>
                 </div>
 
                 <!-- bouton SUBMIT -->
