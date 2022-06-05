@@ -1,5 +1,6 @@
 package com.miru.local;
 
+import com.miru.local.dto.CommandeDto;
 import com.miru.local.entity.*;
 
 import java.util.HashSet;
@@ -82,6 +83,15 @@ public class Fixtures {
                 .commandeProduits(contentOfSecondOrder())
                 .typeLivraison(someDeliveryType())
                 .build();
+    }
+
+    public static CommandeDto commandeDto() {
+        CommandeDto dto = new CommandeDto();
+        dto.setClient(someClient());
+        dto.setCommande(firstOrder());
+        dto.setCommandeProduits(firstOrder().getCommandeProduits());
+
+        return dto;
     }
 
 }
