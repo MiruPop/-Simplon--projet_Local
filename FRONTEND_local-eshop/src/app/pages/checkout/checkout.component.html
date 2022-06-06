@@ -1,6 +1,5 @@
 <div class="main-content page-m">
     <div class="section-content section-content-p30">
-        <div class="container-fluid">
 
             <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
 
@@ -246,8 +245,8 @@
                 <div class="form-area">
                     <h5>Récapitulatif commande:</h5>
                     <p>Nombre total articles : {{ totalQuantity }}</p>
-                    <p>Livraison : GRATUIT</p>
-                    <p>Prix total : {{ totalPrice | currency:'EUR' }}</p>
+                    <p>Livraison : {{ delivery?.type }}, prix: {{ delivery?.prix }}</p>
+                    <p>Prix total : {{ totalPrice + delivery?.prix | currency:'EUR' }}</p>
                 </div>
 
                 <!-- bouton SUBMIT -->
@@ -255,7 +254,5 @@
                     <button type="submit" class="btn btn-dark" [disabled]="isDisabled">Acheter</button>
                 </div>
             </form>
-
-        </div>
     </div>
 </div>

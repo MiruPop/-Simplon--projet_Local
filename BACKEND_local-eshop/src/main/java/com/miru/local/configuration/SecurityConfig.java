@@ -17,12 +17,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2ResourceServer()
                 .jwt();
+        // afficher une reponse dans body pour les Erreurs 401
+        Okta.configureResourceServer401ResponseBody(http);
 
         // ajouter les filtres CORS
         http.cors();
 
-        // afficher une reponse dans body pour les Erreurs 401
-        Okta.configureResourceServer401ResponseBody(http);
+
 
         // désactiver la vérification des CSRF pour pouvoir envoyer des requêtes POST
         // (car nous n'utilisons pas des Cookies de traçage de la Session)

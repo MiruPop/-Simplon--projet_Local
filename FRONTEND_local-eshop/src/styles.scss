@@ -9,13 +9,19 @@
 // GOOGLE FONTS / ABEL
 @import "https://fonts.googleapis.com/css2?family=Abel&display=swap";
 
-
 body {
     font-family: "Abel";
     color: black;
-    min-height: 100vh;
+    min-height: 100%;
+    position: relative;
 }
 
 .btn {
     font-size: 1rem;
+}
+
+app-root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }

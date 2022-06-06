@@ -16,27 +16,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(locations = "classpath:application-test.properties")
 class ClientRepositoryTest {
 
-    private Client client = someClient();
-
     @Autowired
     private ClientRepository clientRepository;
-
-    @BeforeEach
-    void setUp() {
-        clientRepository.save(client);
-    }
 
     @Test
     void findClientByEmail_should_return_expected_client() {
         // GIVEN
         Client givenClient = someClient();
-        String givenEmail = someClient().getEmail();
+        String givenEmail = givenClient.getEmail();
+        this.clientRepository.save(givenClient);
 
         // WHEN
         Client expectedClient = clientRepository.findClientByEmail(givenEmail);
 
         // THEN
         assertThat(expectedClient).usingRecursiveComparison()
+                .ignoringFields("id")
                 .isEqualTo(givenClient);
     }
 }

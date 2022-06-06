@@ -6,16 +6,16 @@ import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 // MDB Modules
-import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 // Component
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
-import { CarouselComponent } from './components/carousel/carousel.component';
+import { HeroComponent } from './components/hero/hero.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ArtistBarComponent } from './components/artist-bar/artist-bar.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
@@ -68,7 +68,7 @@ const oktaAuth = new OktaAuth(oktaConfig);
   declarations: [
     AppComponent,
     HeaderComponent,
-    CarouselComponent,
+    HeroComponent,
     FooterComponent,
     ArtistBarComponent,
     ProductCardComponent,
@@ -98,12 +98,12 @@ const oktaAuth = new OktaAuth(oktaConfig);
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MdbCarouselModule,
     MdbCollapseModule,
     MdbDropdownModule,
     MdbModalModule,
     OktaAuthModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     ProductsService,

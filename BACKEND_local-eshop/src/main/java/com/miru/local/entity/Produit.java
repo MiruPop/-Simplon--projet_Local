@@ -1,15 +1,22 @@
 package com.miru.local.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Table(name = "produit")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Produit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +37,10 @@ public class Produit {
     private int quantiteStock;
     @Column(name = "date_creation")
     @CreationTimestamp
-    private Date dateCreation;
+    private LocalDateTime dateCreation;
     @Column(name = "derniere_maj")
     @UpdateTimestamp
-    private Date derniereMaj;
+    private LocalDateTime derniereMaj;
 
     @ManyToOne
     @JoinColumn(name = "id_categorie", nullable = false)

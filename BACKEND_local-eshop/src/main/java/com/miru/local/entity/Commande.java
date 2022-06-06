@@ -1,12 +1,12 @@
 package com.miru.local.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +14,9 @@ import java.util.Set;
 @Table(name = "commandes")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,25 +32,32 @@ public class Commande {
     private String statut;
     @Column(name = "date_creation")
     @CreationTimestamp
-    private Date dateCreation;
+    private LocalDateTime dateCreation;
     @Column(name = "derniere_maj")
     @UpdateTimestamp
-    private Date derniereMaj;
+    private LocalDateTime derniereMaj;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commande")
+    @OneToMany(mappedBy = "commande")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Set<CommandeProduit> commandeProduits = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "adresse_facturation_id", referencedColumnName = "id")
     private Adresse adresseFacturation;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "adresse_livraison_id", referencedColumnName = "id")
     private Adresse adresseLivraison;
+
+    @ManyToOne
+    @JoinColumn(name = "type_livraison", nullable = false)
+    private Livraison typeLivraison;
 
     public void add(CommandeProduit produitCommande) {
         if(produitCommande != null) {

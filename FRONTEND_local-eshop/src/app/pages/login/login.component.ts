@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
       clientId: authConfig.oidc.clientId,
       redirectUri: authConfig.oidc.redirectUri,
       colors: {
-        button: '#008000'
+        brand: '#000000'
       },
       i18n: {
         fr: {
@@ -33,12 +33,21 @@ export class LoginComponent implements OnInit {
         }
       },
       logoText: 'lôcal boutique',
+      features: {
+        registration: true,
+        showPasswordToggleOnSignInPage: true
+      },
       authParams: {
         pkce: true,
         issuer: authConfig.oidc.issuer,
         scopes: authConfig.oidc.scopes
       },
-    });
+      registration: {
+        click: () => {
+          window.location.href = 'https://localhost:4200/sign-up';
+        }
+      }
+      });
   }
 
   ngOnInit(): void {

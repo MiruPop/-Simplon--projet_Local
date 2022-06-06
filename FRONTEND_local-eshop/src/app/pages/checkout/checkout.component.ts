@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Delivery } from 'src/app/models/delivery';
 import { Order } from 'src/app/models/order';
 import { OrderProduct } from 'src/app/models/order-product';
 import { PaymentInfo } from 'src/app/models/payment-info';
@@ -22,10 +23,11 @@ export class CheckoutComponent implements OnInit {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
+  storage: Storage = sessionStorage;
+  delivery: Delivery = JSON.parse(this.storage.getItem('delivery'));
+
   creditCardMonths: number[] = [];
   creditCardYears: number[] = [];
-
-  storage: Storage = sessionStorage;
 
   // initialisation de l'API STripe
   stripe = Stripe(environment.STRIPE_PUBLIC_KEY);
@@ -97,7 +99,7 @@ export class CheckoutComponent implements OnInit {
   get codePostalFacturation() { return this.checkoutFormGroup.get('adresseFacturation.codePostal'); }
   get paysFacturation() { return this.checkoutFormGroup.get('adresseFacturation.pays'); }
 
-  
+
   // charger le formulaire de paiement Stripe
   setupStripePaymentForm() {
 
@@ -105,7 +107,20 @@ export class CheckoutComponent implements OnInit {
 
     // créer un élément "carte", le personnaliser en cachant le champ "postal-code",
     // car celui-ci est collecté dans le champ 'adresse'
-    this.cardElement = elements.create('card', { hidePostalCode: true });
+    // this.cardElement = elements.create('card', {hidePostalCode: true});
+    this.cardElement = elements.create('card', {
+      hidePostalCode: true,
+      style: {
+        base: {
+          lineHeight: '3em',
+          fontWeight: '300',
+          fontSize: '16px',
+          '::placeholder': {
+            color: '#2C73CD'
+          }
+        }
+      }
+    });
 
     // injecter une instance de l'élément dans la <div> 'card-element'
     this.cardElement.mount('#card-element')
@@ -158,8 +173,11 @@ export class CheckoutComponent implements OnInit {
 
     // mettre en place la commande
     let order = new Order();
-    order.prixTotal = this.totalPrice;
+    order.prixTotal = this.totalPrice + this.delivery.prix;
+    order.typeLivraison = this.delivery;
     order.quantiteTotale = this.totalQuantity;
+    console.log(order)
+    console.log(order.typeLivraison.type)
 
     // récupérer les articles du cart
     const cartItems = this.cartService.cartItems;
@@ -187,7 +205,7 @@ export class CheckoutComponent implements OnInit {
 
     // si le formulaire est validé, créer l'objet paymentIntent,
     // confirmer le paiement par carte et envoyer la commande
-    if(!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
+    if (!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
       this.isDisabled = true;
 
       this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
@@ -213,9 +231,9 @@ export class CheckoutComponent implements OnInit {
             {
               handleActions: false
             })
-            .then(function(result) {
+            .then(function (result) {
               // valider l'envoi des informations de paiement
-              if(result.error) {
+              if (result.error) {
                 alert(`Une erreur s'est produite : ${result.error.message}`);
                 this.isDisabled = false;
               }

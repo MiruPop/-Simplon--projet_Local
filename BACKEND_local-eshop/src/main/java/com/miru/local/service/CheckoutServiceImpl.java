@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.*;
 
-import static com.miru.local.utils.StatutCommandeEnum.TRAITEMENT;
-
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
 
@@ -46,6 +44,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         commande.setAdresseFacturation(commandeDto.getAdresseFacturation());
         commande.setAdresseLivraison(commandeDto.getAdresseLivraison());
+        commande.setTypeLivraison(commandeDto.getCommande().getTypeLivraison());
         commande.setStatut(String.valueOf(StatutCommandeEnum.TRAITEMENT));
 
         // rattacher la commande au client

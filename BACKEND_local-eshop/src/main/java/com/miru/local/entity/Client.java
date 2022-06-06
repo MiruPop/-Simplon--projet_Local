@@ -1,6 +1,7 @@
 package com.miru.local.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -25,7 +26,8 @@ public class Client {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Commande> commandes = new HashSet<>();
 
     public void add(Commande commande) {

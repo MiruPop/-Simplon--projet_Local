@@ -1,7 +1,7 @@
 package com.miru.local.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,6 +11,9 @@ import java.util.Set;
 //@Data - bug Lombok connu en utilisant cette annot. sur classe contenant relation @ManyToOne !!!
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Categorie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +23,7 @@ public class Categorie {
     @Column(name = "libelle")
     private String libelle;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categorie")
+    @OneToMany(mappedBy = "categorie")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<Produit> produits;
 }
