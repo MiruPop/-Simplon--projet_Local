@@ -6,12 +6,15 @@ import com.miru.local.dto.ReponseCommande;
 import com.miru.local.entity.Client;
 import com.miru.local.entity.Commande;
 import com.miru.local.entity.CommandeProduit;
+import com.miru.local.entity.Produit;
 import com.miru.local.repository.ClientRepository;
+import com.miru.local.repository.ProduitRepository;
 import com.miru.local.utils.ModePaiementEnum;
 import com.miru.local.utils.StatutCommandeEnum;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,9 @@ import java.util.*;
 
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
+
+    @Autowired
+    private ProduitRepository produitRepository;
 
     private ClientRepository clientRepository;
 
@@ -32,16 +38,14 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Override
     @Transactional
     public ReponseCommande envoiCommande(CommandeDto commandeDto) {
-
         Commande commande = commandeDto.getCommande();
 
         // générer un n° de commande unique et aléatoire
         String numeroCommande = genererNumeroCommande();
         commande.setNumeroCommande(numeroCommande);
 
-        Set<CommandeProduit> produitsCommandes = commandeDto.getCommandeProduits();
+        List<CommandeProduit> produitsCommandes = commandeDto.getCommandeProduits();
         produitsCommandes.forEach(commande::add);
-
         commande.setAdresseFacturation(commandeDto.getAdresseFacturation());
         commande.setAdresseLivraison(commandeDto.getAdresseLivraison());
         commande.setTypeLivraison(commandeDto.getCommande().getTypeLivraison());
@@ -57,10 +61,10 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         client.add(commande);
 
-        // sauvegarder le Client dans la BDD
-            // grâce aux clés étrangères, la Cascade produira également la sauvegarde de la commande,
-            // des adresses et des lignes de commande (CommandeProduit)
         clientRepository.save(client);
+        for (CommandeProduit orderLine:produitsCommandes) {
+            updateStock(orderLine.getIdProduit(), orderLine.getQuantite());
+        }
 
         return new ReponseCommande(numeroCommande);
     }
@@ -81,5 +85,17 @@ public class CheckoutServiceImpl implements CheckoutService {
     // méthode utilitaire
     private String genererNumeroCommande() {
         return UUID.randomUUID().toString();
+    }
+
+
+    private void updateStock(Long idProduit, int quantiteCommandee) {
+        Produit produit = this.produitRepository.getById(idProduit);
+        if(produit.getQuantiteStock() >= quantiteCommandee) {
+            produit.setQuantiteStock(produit.getQuantiteStock() - quantiteCommandee);
+        }
+        else {
+            produit.setQuantiteStock(0);
+        }
+        produitRepository.save(produit);
     }
 }

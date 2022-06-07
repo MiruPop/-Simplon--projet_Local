@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
+import { Customer } from 'src/app/models/customer';
 
 @Component({
   selector: 'app-login-status',
@@ -37,7 +38,17 @@ export class LoginStatusComponent implements OnInit {
           this.userFirstName = result.given_name;
 
           const emailUtilisateur = result.email;
+          const utilisateur = result;
+          let myCustomer: Customer = new Customer;
+          myCustomer.nom = result.family_name;
+          myCustomer.prenom = result.given_name;
+          myCustomer.email = result.email;
+          // const prenomUtilisateur = result.given_name;
+          // const nomUtilisateur = result.family_name;
           this.storage.setItem('clientEmail', JSON.stringify(emailUtilisateur));
+          this.storage.setItem('customer', JSON.stringify(myCustomer));
+          // this.storage.setItem('clientFirstName', JSON.stringify(prenomUtilisateur));
+          // this.storage.setItem('clientLastName', JSON.stringify(nomUtilisateur));
         }
       )
     }

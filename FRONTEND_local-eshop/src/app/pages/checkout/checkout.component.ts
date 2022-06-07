@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Customer } from 'src/app/models/customer';
 import { Delivery } from 'src/app/models/delivery';
 import { Order } from 'src/app/models/order';
 import { OrderProduct } from 'src/app/models/order-product';
@@ -25,9 +26,12 @@ export class CheckoutComponent implements OnInit {
 
   storage: Storage = sessionStorage;
   delivery: Delivery = JSON.parse(this.storage.getItem('delivery'));
+  customer: Customer;
 
-  creditCardMonths: number[] = [];
-  creditCardYears: number[] = [];
+  // let emailUtilisateur: string;
+  // let prenomUtilisateur: string;
+  // let nomUtilisateur: string;
+
 
   // initialisation de l'API STripe
   stripe = Stripe(environment.STRIPE_PUBLIC_KEY);
@@ -47,18 +51,10 @@ export class CheckoutComponent implements OnInit {
     this.setupStripePaymentForm();
     this.reviewCartDetails();
 
-    // récupérer l'email utilisateur depuis le storage du navigateur
-    const emailUtilisateur = JSON.parse(this.storage.getItem('clientEmail'));
+    this.customer = JSON.parse(this.storage.getItem('customer'));
 
     this.checkoutFormGroup = this.formBuilder.group({
-      customer: this.formBuilder.group({
-        prenom: new FormControl('', [Validators.required, Validators.minLength(2),
-        CustomValidators.notOnlyWhitespace]),
-        nom: new FormControl('', [Validators.required, Validators.minLength(2),
-        CustomValidators.notOnlyWhitespace]),
-        email: new FormControl(emailUtilisateur, [Validators.required,
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
-      }),
+
       adresseLivraison: this.formBuilder.group({
         rue: new FormControl('', [Validators.required, Validators.minLength(2),
         CustomValidators.notOnlyWhitespace]),
@@ -85,10 +81,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   // getters pour les Form Controls
-  get prenom() { return this.checkoutFormGroup.get('customer.prenom'); }
-  get nom() { return this.checkoutFormGroup.get('customer.nom'); }
-  get email() { return this.checkoutFormGroup.get('customer.email'); }
-
   get rueLivraison() { return this.checkoutFormGroup.get('adresseLivraison.rue'); }
   get villeLivraison() { return this.checkoutFormGroup.get('adresseLivraison.ville'); }
   get codePostalLivraison() { return this.checkoutFormGroup.get('adresseLivraison.codePostal'); }
@@ -185,11 +177,13 @@ export class CheckoutComponent implements OnInit {
     // - méthode pour remplacer une boucle "for" pour remplir les orderItems depuis les cartItems
     let orderProducts: OrderProduct[] = cartItems.map(elem => new OrderProduct(elem));
 
+
     // créer un achat et peupler ses champs depuis le formulaire:
     let purchase = new Purchase();
 
     /* client */
-    purchase.client = this.checkoutFormGroup.controls['customer'].value;
+    // purchase.client = this.checkoutFormGroup.controls['customer'].value;
+    purchase.client = this.customer;
 
     /* adresses livraison et facturation */
     purchase.adresseLivraison = this.checkoutFormGroup.controls['adresseLivraison'].value;
@@ -262,7 +256,6 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  // méthode utilitaire
   resetCart() {
     // supprimer infos shopping cart
     this.cartService.cartItems = [];

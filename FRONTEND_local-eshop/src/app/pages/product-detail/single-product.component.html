@@ -13,35 +13,18 @@
                     <h4>{{ product.caracteristiques }}</h4>
                     <h4 class="fw-bold">Prix unitaire : <span>{{ product.prixUnitaire | currency:'EUR'}}</span></h4>
                 </div>
-                <div>
-                    <!-- <form action=""> -->
-                        <!-- <div class="m-3">
-                            <label for="quantityInput" class="form-label fw-bold">Quantité</label>
-                            <select class="form-select" id="quantityInput">
-                                <option selected>Choisissez la quantité</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                            <div>
-                                <div *ngIf="product.quantiteStock > 3" class="form-text fw-bold text-success">En stock
-                                </div>
 
-                                <div *ngIf="product.quantiteStock === 0" class="form-text fw-bold text-danger">Article
-                                    indisponible</div>
-                                <div *ngIf="isBetween(product.quantiteStock)" class="form-text fw-bold text-warning">
-                                    Plus que
-                                    {{product.quantiteStock}} articles !</div>
-                            </div>
-
-                        </div> -->
-                        <button (click)="onAddToCart()" class="btn btn-dark btn-sm m-3">Ajouter au panier</button>
-                    <!-- </form> -->
-                </div>
+                <button *ngIf="product.quantiteStock != 0;else noStock" type="button" class="btn btn-sm m-3"
+                    [ngClass]="[buttonText === 'Hop! Au panier!' ? 'btn-light' : 'btn-dark']"
+                    (click)="onAddToCart(product)">{{
+                    buttonText }}</button>
+                    
                 <div class="mt-5">
                     <p>{{ product.description }}</p>
                 </div>
             </div>
         </div>
+
+        <ng-template #noStock>
+            <div class="text-danger">Produit indisponible</div>
+        </ng-template>

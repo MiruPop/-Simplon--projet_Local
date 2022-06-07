@@ -13,8 +13,9 @@ import { CartItem } from 'src/app/models/cart-item';
 })
 export class SingleProductComponent implements OnInit {
 
-  // @Input() product: Product;
-  product : Product = new Product();
+  @Input() product: Product;
+
+  buttonText: string;
 
   constructor(
     private productsService:ProductsService,
@@ -23,19 +24,21 @@ export class SingleProductComponent implements OnInit {
     private location:Location) { }
 
   ngOnInit(): void {
+    this.buttonText = 'Acheter';
     this.getProduct();
   }
 
   getProduct() :void {
     const productId = +this.route.snapshot.params['id'];
-    // const id = Number(this.route.snapshot.paramMap.get('id'));
+    // OU : const id = Number(this.route.snapshot.paramMap.get('id'));
     this.productsService.getProductById(productId)
     .subscribe(product => this.product=product);
   }
 
-  onAddToCart() {
-    const myCartItem : CartItem = new CartItem(this.product);
+  onAddToCart(myProduct : Product) {
+    const myCartItem : CartItem = new CartItem(myProduct);
     this.cartService.addToCart(myCartItem);
+    this.buttonText = "Hop! Au panier!";
   }
 
   goBack():void {

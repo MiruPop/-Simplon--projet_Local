@@ -7,7 +7,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -39,7 +41,7 @@ public class Commande {
 
     @OneToMany(mappedBy = "commande")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Set<CommandeProduit> commandeProduits = new HashSet<>();
+    private List<CommandeProduit> commandeProduits = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_client")
@@ -62,7 +64,7 @@ public class Commande {
     public void add(CommandeProduit produitCommande) {
         if(produitCommande != null) {
             if(commandeProduits == null) {
-                commandeProduits = new HashSet<>();
+                commandeProduits = new ArrayList<>();
             }
             commandeProduits.add(produitCommande);
             produitCommande.setCommande(this);

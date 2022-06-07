@@ -13,7 +13,12 @@
             {{ product.caracteristiques }}
         </p>
         <p class="card-text text-muted">{{ product.prixUnitaire | currency: 'EUR'}} </p>
-        <button type="button" class="btn" [ngClass]="[buttonText === 'Produit acheté' ? 'btn-light' : 'btn-dark']"
-            (click)="onAddToCart(product)">{{ buttonText }}</button>
+        <button *ngIf="product.quantiteStock != 0;else noStock" type="button" class="btn"
+            [ngClass]="[buttonText === 'Hop! Au panier!' ? 'btn-light' : 'btn-dark']" (click)="onAddToCart(product)">{{
+            buttonText }}</button>
     </div>
 </div>
+
+<ng-template #noStock>
+    <div class="text-danger">Produit indisponible</div>
+</ng-template>
