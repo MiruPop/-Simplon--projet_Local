@@ -29,8 +29,8 @@ import { PresentationPageComponent } from './pages/presentation-page/presentatio
 import { SingleProductComponent } from './pages/product-detail/single-product.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { FactureMailComponent } from './facture-mail/facture-mail.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ArtistListComponent } from './artist-list/artist-list.component';
+import { ProductListComponent } from './lists/product-list/product-list.component';
+import { ArtistListComponent } from './lists/artist-list/artist-list.component';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
 import { MembersPageComponent } from './pages/members-page/members-page.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
