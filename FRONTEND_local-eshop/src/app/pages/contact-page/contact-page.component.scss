@@ -7,3 +7,20 @@
     max-height: 700px;
     margin: -50px 0px 0px -50px;
 }
+
+.jumbotron {
+    // background: #358cce;
+    background-image: url('/assets/images/shop3.jpg');
+    color: #fff;
+    border-radius: 0px;
+}
+.jumbotron-sm {
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+.jumbotron small {
+    color: #fff;
+}
+.h1 small {
+    font-size: 24px;
+}

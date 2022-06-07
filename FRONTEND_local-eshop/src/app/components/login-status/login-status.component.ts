@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-login-status',
@@ -16,11 +14,8 @@ export class LoginStatusComponent implements OnInit {
 
   storage: Storage = sessionStorage;
 
-  modalRef: MdbModalRef<ModalComponent> | null = null;
-
   constructor(private oktaAuthService: OktaAuthStateService,
-              @Inject(OKTA_AUTH) private oktaAuth: OktaAuth,
-              private modalService: MdbModalService) { }
+              @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { }
 
   ngOnInit(): void {
     // souscrire aux changements de l'état d'authentification
@@ -46,19 +41,6 @@ export class LoginStatusComponent implements OnInit {
         }
       )
     }
-  }
-
-  openModal() {
-    this.modalRef = this.modalService.open(ModalComponent, {
-      data: { title: 'Custom title',
-      buttonAction:'Custom buttonAction',
-      bottomText:'custom text',
-      choiceText:'change action' },
-      modalClass: 'modal-dialog-centered'
-    });
-    this.modalRef.onClose.subscribe((message: any) => {
-      console.log(message);
-    });
   }
 
   logout() {
