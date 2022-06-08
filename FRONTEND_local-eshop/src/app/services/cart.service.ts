@@ -56,7 +56,6 @@ export class CartService {
     this.computeCartTotals();
   }
 
-  // Mise à jour du stock
   decrementQuantity(myCartItem: CartItem) {
     myCartItem.quantite--;
 

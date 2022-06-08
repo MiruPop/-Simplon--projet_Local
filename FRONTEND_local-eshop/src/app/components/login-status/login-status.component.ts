@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import { ModalComponent } from '../modal/modal.component';
+import { Customer } from 'src/app/models/customer';
 
 @Component({
   selector: 'app-login-status',
@@ -16,11 +15,8 @@ export class LoginStatusComponent implements OnInit {
 
   storage: Storage = sessionStorage;
 
-  modalRef: MdbModalRef<ModalComponent> | null = null;
-
   constructor(private oktaAuthService: OktaAuthStateService,
-              @Inject(OKTA_AUTH) private oktaAuth: OktaAuth,
-              private modalService: MdbModalService) { }
+              @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { }
 
   ngOnInit(): void {
     // souscrire aux changements de l'état d'authentification
@@ -42,23 +38,20 @@ export class LoginStatusComponent implements OnInit {
           this.userFirstName = result.given_name;
 
           const emailUtilisateur = result.email;
+          const utilisateur = result;
+          let myCustomer: Customer = new Customer;
+          myCustomer.nom = result.family_name;
+          myCustomer.prenom = result.given_name;
+          myCustomer.email = result.email;
+          // const prenomUtilisateur = result.given_name;
+          // const nomUtilisateur = result.family_name;
           this.storage.setItem('clientEmail', JSON.stringify(emailUtilisateur));
+          this.storage.setItem('customer', JSON.stringify(myCustomer));
+          // this.storage.setItem('clientFirstName', JSON.stringify(prenomUtilisateur));
+          // this.storage.setItem('clientLastName', JSON.stringify(nomUtilisateur));
         }
       )
     }
-  }
-
-  openModal() {
-    this.modalRef = this.modalService.open(ModalComponent, {
-      data: { title: 'Custom title',
-      buttonAction:'Custom buttonAction',
-      bottomText:'custom text',
-      choiceText:'change action' },
-      modalClass: 'modal-dialog-centered'
-    });
-    this.modalRef.onClose.subscribe((message: any) => {
-      console.log(message);
-    });
   }
 
   logout() {

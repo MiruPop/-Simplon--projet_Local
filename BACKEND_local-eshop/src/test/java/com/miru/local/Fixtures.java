@@ -3,7 +3,9 @@ package com.miru.local;
 import com.miru.local.dto.CommandeDto;
 import com.miru.local.entity.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Fixtures {
@@ -40,6 +42,7 @@ public class Fixtures {
                 .id(Long.valueOf(1))
                 .categorie(someCategory())
                 .artiste(someArtist())
+                .quantiteStock(5)
                 .build();
     }
 
@@ -50,8 +53,8 @@ public class Fixtures {
                 .build();
     }
 
-    public static Set<CommandeProduit> contentOfFirstOrder() {
-        Set<CommandeProduit> orderLine = new HashSet<>();
+    public static List<CommandeProduit> contentOfFirstOrder() {
+        List<CommandeProduit> orderLine = new ArrayList<>();
         orderLine.add(CommandeProduit.builder()
                 .id(Long.valueOf(1))
                 .idProduit(someProduct().getId())
@@ -60,8 +63,8 @@ public class Fixtures {
                 .build());
         return orderLine;
     }
-    public static Set<CommandeProduit> contentOfSecondOrder() {
-        Set<CommandeProduit> orderLine = new HashSet<>();
+    public static List<CommandeProduit> contentOfSecondOrder() {
+        List<CommandeProduit> orderLine = new ArrayList<>(4);
         orderLine.add(CommandeProduit.builder()
                 .id(Long.valueOf(2))
                 .idProduit(someProduct().getId())

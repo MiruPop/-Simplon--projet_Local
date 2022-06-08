@@ -1,258 +1,211 @@
 <div class="main-content page-m">
     <div class="section-content section-content-p30">
+        <!--Message CUSTOMER -->
+        <div class="card">
+            <div class="card-body">
+                <h5>{{ customer.prenom }}, merci de saisir vos informations de livraison et paiement !</h5>
+            </div>
+        </div>
 
-            <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
 
-                <!-- Form Group CUSTOMER -->
-                <div formGroupName="customer" class="form-area">
-                    <h5>Client</h5>
-                    <div class="row">
-                        <div class="col-md-2"><label>Prénom</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="prenom" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="prenom.errors.required || prenom.errors.notOnlyWhitespace">
-                                        Le prénom est obligatoire
-                                    </div>
-                                    <div *ngIf="prenom.errors.minlength">
-                                        Le prénom doit comporter minimum 2 lettres
-                                    </div>
+        <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+            <!-- Form Group ADRESSE LIVRAISON -->
+            <div formGroupName="adresseLivraison" class="form-area">
+                <h5>Adresse livraison</h5>
+                <div class="row">
+                    <div class="col-md-2"><label>Rue (n°, nom)</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="rue" type="text">
+                            <!-- validation - message erreur -->
+                            <div *ngIf="rueLivraison.invalid && (rueLivraison.dirty || rueLivraison.touched)"
+                                class="alert alert-danger mt-1">
+                                <div *ngIf="rueLivraison.errors.required || rueLivraison.errors.notOnlyWhitespace">
+                                    L'adresse est obligatoire
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>NOM</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="nom" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="nom.invalid && (nom.dirty || nom.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="nom.errors.required || prenom.errors.notOnlyWhitespace">
-                                        Le nom est obligatoire
-                                    </div>
-                                    <div *ngIf="nom.errors.minlength">
-                                        Le nom doit comporter minimum 2 lettres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>E-mail</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="email" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="email.invalid && (email.dirty || email.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="email.errors.required">
-                                        L'adresse mail est obligatoire
-                                    </div>
-                                    <div *ngIf="email.errors.pattern">
-                                        L'adresse mail doit respecter un format email valide
-                                    </div>
+                                <div *ngIf="rueLivraison.errors.minlength">
+                                    L'adresse doit comporter minimum 2 lettres
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Form Group ADRESSE LIVRAISON -->
-                <div formGroupName="adresseLivraison" class="form-area">
-                    <h5>Adresse livraison</h5>
-                    <div class="row">
-                        <div class="col-md-2"><label>Rue (n°, nom)</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="rue" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="rueLivraison.invalid && (rueLivraison.dirty || rueLivraison.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div
-                                        *ngIf="rueLivraison.errors.required || rueLivraison.errors.notOnlyWhitespace">
-                                        L'adresse est obligatoire
-                                    </div>
-                                    <div *ngIf="rueLivraison.errors.minlength">
-                                        L'adresse doit comporter minimum 2 lettres
-                                    </div>
+                <div class="row">
+                    <div class="col-md-2"><label>Ville</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="ville" type="text">
+                            <!-- validation - message erreur -->
+                            <div *ngIf="villeLivraison.invalid && (villeLivraison.dirty || villeLivraison.touched)"
+                                class="alert alert-danger mt-1">
+                                <div *ngIf="villeLivraison.errors.required || villeLivraison.errors.notOnlyWhitespace">
+                                    La ville est obligatoire
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>Ville</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="ville" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="villeLivraison.invalid && (villeLivraison.dirty || villeLivraison.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="villeLivraison.errors.required || villeLivraison.errors.notOnlyWhitespace">
-                                        La ville est obligatoire
-                                    </div>
-                                    <div *ngIf="villeLivraison.errors.minlength">
-                                        La ville doit comporter minimum 2 lettres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>Code postal</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="codePostal" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="codePostalLivraison.invalid && (codePostalLivraison.dirty || codePostalLivraison.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="codePostalLivraison.errors.required">
-                                        Le code postal est obligatoire
-                                    </div>
-                                    <div *ngIf="codePostalLivraison.errors.pattern">
-                                        Le code postal doit être composé de 5 chiffres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>Pays</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="pays" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="paysLivraison.invalid && (paysLivraison.dirty || paysLivraison.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div
-                                        *ngIf="paysLivraison.errors.required || paysLivraison.errors.notOnlyWhitespace">
-                                        Le pays est obligatoire
-                                    </div>
-                                    <div *ngIf="paysLivraison.errors.minlength">
-                                        Le pays doit comporter minimum 2 lettres
-                                    </div>
+                                <div *ngIf="villeLivraison.errors.minlength">
+                                    La ville doit comporter minimum 2 lettres
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- checkbox pour copier adresse livraison dans adresse facturation -->
-                <div class="form-check mb-4">
-                    <input mdbCheckbox class="form-check-input" type="checkbox" id="flexCheckDefault"
-                        (change)="copyShippingToBillingAddress($event)">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Adresse facturation identique à l'adresse livraison
-                    </label>
-                </div>
-
-                <!-- Form Group ADRESSE FACTURATION -->
-                <div formGroupName="adresseFacturation" class="form-area">
-                    <h5>Adresse facturation</h5>
-                    <div class="row">
-                        <div class="col-md-2"><label>Rue (n°, nom)</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="rue" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="rueFacturation.invalid && (rueFacturation.dirty || rueFacturation.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div
-                                        *ngIf="rueFacturation.errors.required || rueFacturation.errors.notOnlyWhitespace">
-                                        L'adresse est obligatoire
-                                    </div>
-                                    <div *ngIf="rueFacturation.errors.minlength">
-                                        L'adresse doit comporter minimum 2 lettres
-                                    </div>
+                <div class="row">
+                    <div class="col-md-2"><label>Code postal</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="codePostal" type="text">
+                            <!-- validation - message erreur -->
+                            <div *ngIf="codePostalLivraison.invalid && (codePostalLivraison.dirty || codePostalLivraison.touched)"
+                                class="alert alert-danger mt-1">
+                                <div *ngIf="codePostalLivraison.errors.required">
+                                    Le code postal est obligatoire
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>Ville</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="ville" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="villeFacturation.invalid && (villeFacturation.dirty || villeFacturation.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="villeFacturation.errors.required || villeFacturation.errors.notOnlyWhitespace">
-                                        La ville est obligatoire
-                                    </div>
-                                    <div *ngIf="villeFacturation.errors.minlength">
-                                        La ville doit comporter minimum 2 lettres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>Code postal</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="codePostal" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="codePostalFacturation.invalid && (codePostalFacturation.dirty || codePostalFacturation.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="codePostalFacturation.errors.required">
-                                        Le code postal est obligatoire
-                                    </div>
-                                    <div *ngIf="codePostalFacturation.errors.pattern">
-                                        Le code postal doit être composé de 5 chiffres
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2"><label>Pays</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="pays" type="text">
-                                <!-- validation - message erreur -->
-                                <div *ngIf="paysFacturation.invalid && (paysFacturation.dirty || paysFacturation.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div
-                                        *ngIf="paysFacturation.errors.required || paysFacturation.errors.notOnlyWhitespace">
-                                        Le pays est obligatoire
-                                    </div>
-                                    <div *ngIf="paysFacturation.errors.minlength">
-                                        Le pays doit comporter minimum 2 lettres
-                                    </div>
+                                <div *ngIf="codePostalLivraison.errors.pattern">
+                                    Le code postal doit être composé de 5 chiffres
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- CARTE CREDIT - STRIPE ELEMENT -->
-                <div formGroupName="creditCard" class="form-area">
-                    <h4>Carte de paiement</h4>
-
-                    <div id="card-element">
-                        <!-- injection de l'élément Stripe ici -->
+                <div class="row">
+                    <div class="col-md-2"><label>Pays</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <select formControlName="pays">
+                                <option value="" disabled selected>Sélectionnez un pays</option>
+                                <option value="FR">France</option>
+                                <option value="UK">United Kingdom</option>
+                            </select>
+                            <!-- validation - message erreur -->
+                            <div *ngIf="paysLivraison.invalid && (paysLivraison.dirty || paysLivraison.touched)"
+                                class="alert alert-danger mt-1">
+                                <div *ngIf="paysLivraison.errors.required || paysLivraison.errors.notOnlyWhitespace">
+                                    Le pays est obligatoire
+                                </div>
+                                <div *ngIf="paysLivraison.errors.minlength">
+                                    Le pays doit comporter minimum 2 lettres
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- affichage en cas d'erreur -->
-                    <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
+            <!-- checkbox pour copier adresse livraison dans adresse facturation -->
+            <div class="form-check mb-4">
+                <input mdbCheckbox class="form-check-input" type="checkbox" id="flexCheckDefault"
+                    (change)="copyShippingToBillingAddress($event)">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Adresse facturation identique à l'adresse livraison
+                </label>
+            </div>
+
+            <!-- Form Group ADRESSE FACTURATION -->
+            <div formGroupName="adresseFacturation" class="form-area">
+                <h5>Adresse facturation</h5>
+                <div class="row">
+                    <div class="col-md-2"><label>Rue (n°, nom)</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="rue" type="text">
+                            <!-- validation - message erreur -->
+                            <div *ngIf="rueFacturation.invalid && (rueFacturation.dirty || rueFacturation.touched)"
+                                class="alert alert-danger mt-1">
+                                <div *ngIf="rueFacturation.errors.required || rueFacturation.errors.notOnlyWhitespace">
+                                    L'adresse est obligatoire
+                                </div>
+                                <div *ngIf="rueFacturation.errors.minlength">
+                                    L'adresse doit comporter minimum 2 lettres
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><label>Ville</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="ville" type="text">
+                            <!-- validation - message erreur -->
+                            <div *ngIf="villeFacturation.invalid && (villeFacturation.dirty || villeFacturation.touched)"
+                                class="alert alert-danger mt-1">
+                                <div
+                                    *ngIf="villeFacturation.errors.required || villeFacturation.errors.notOnlyWhitespace">
+                                    La ville est obligatoire
+                                </div>
+                                <div *ngIf="villeFacturation.errors.minlength">
+                                    La ville doit comporter minimum 2 lettres
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><label>Code postal</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="codePostal" type="text">
+                            <!-- validation - message erreur -->
+                            <div *ngIf="codePostalFacturation.invalid && (codePostalFacturation.dirty || codePostalFacturation.touched)"
+                                class="alert alert-danger mt-1">
+                                <div *ngIf="codePostalFacturation.errors.required">
+                                    Le code postal est obligatoire
+                                </div>
+                                <div *ngIf="codePostalFacturation.errors.pattern">
+                                    Le code postal doit être composé de 5 chiffres
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><label>Pays</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <select formControlName="pays">
+                                <option value="" disabled selected>Sélectionnez un pays</option>
+                                <option value="FR">France</option>
+                                <option value="UK">United Kingdom</option>
+                            </select>
+                            <!-- validation - message erreur -->
+                            <div *ngIf="paysFacturation.invalid && (paysFacturation.dirty || paysFacturation.touched)"
+                                class="alert alert-danger mt-1">
+                                <div
+                                    *ngIf="paysFacturation.errors.required || paysFacturation.errors.notOnlyWhitespace">
+                                    Le pays est obligatoire
+                                </div>
+                                <div *ngIf="paysFacturation.errors.minlength">
+                                    Le pays doit comporter minimum 2 lettres
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARTE CREDIT - STRIPE ELEMENT -->
+            <div formGroupName="creditCard" class="form-area">
+                <h4>Carte de paiement</h4>
+
+                <div id="card-element">
+                    <!-- injection de l'élément Stripe ici -->
                 </div>
 
-                <!-- Détails commande -->
-                <div class="form-area">
-                    <h5>Récapitulatif commande:</h5>
-                    <p>Nombre total articles : {{ totalQuantity }}</p>
-                    <p>Livraison : {{ delivery?.type }}, prix: {{ delivery?.prix }}</p>
-                    <p>Prix total : {{ totalPrice + delivery?.prix | currency:'EUR' }}</p>
-                </div>
+                <!-- affichage en cas d'erreur -->
+                <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
+            </div>
 
-                <!-- bouton SUBMIT -->
-                <div class="text-center">
-                    <button type="submit" class="btn btn-dark" [disabled]="isDisabled">Acheter</button>
-                </div>
-            </form>
+            <!-- Détails commande -->
+            <div class="form-area">
+                <h5>Récapitulatif commande:</h5>
+                <p>Nombre total articles : {{ totalQuantity }}</p>
+                <p>Livraison : {{ delivery?.type }}, prix: {{ delivery?.prix }}</p>
+                <p>Prix total : {{ totalPrice + delivery?.prix | currency:'EUR' }}</p>
+            </div>
+
+            <!-- bouton SUBMIT -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-dark" [disabled]="isDisabled">Acheter</button>
+            </div>
+        </form>
     </div>
 </div>

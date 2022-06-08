@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 // MDB Modules
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
-import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 // Component
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -19,8 +18,6 @@ import { HeroComponent } from './components/hero/hero.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ArtistBarComponent } from './components/artist-bar/artist-bar.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
-import { ModalComponent } from './components/modal/modal.component';
-import { PaymentModalComponent } from './components/payment-modal/payment-modal.component';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AboutComponent } from './pages/about/about.component';
@@ -32,8 +29,8 @@ import { PresentationPageComponent } from './pages/presentation-page/presentatio
 import { SingleProductComponent } from './pages/product-detail/single-product.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { FactureMailComponent } from './facture-mail/facture-mail.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ArtistListComponent } from './artist-list/artist-list.component';
+import { ProductListComponent } from './lists/product-list/product-list.component';
+import { ArtistListComponent } from './lists/artist-list/artist-list.component';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
 import { MembersPageComponent } from './pages/members-page/members-page.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
@@ -77,12 +74,10 @@ const oktaAuth = new OktaAuth(oktaConfig);
     EventsPageComponent,
     ShopPageComponent,
     ContactPageComponent,
-    ModalComponent,
     PresentationPageComponent,
     SingleProductComponent,
     ShoppingCartComponent,
     FactureMailComponent,
-    PaymentModalComponent,
     ProductListComponent,
     ArtistListComponent,
     CartStatusComponent,
@@ -100,7 +95,6 @@ const oktaAuth = new OktaAuth(oktaConfig);
     BrowserAnimationsModule,
     MdbCollapseModule,
     MdbDropdownModule,
-    MdbModalModule,
     OktaAuthModule,
     ReactiveFormsModule,
     FormsModule

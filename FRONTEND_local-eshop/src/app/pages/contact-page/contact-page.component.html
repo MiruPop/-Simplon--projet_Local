@@ -1,15 +1,69 @@
-<div class="row">
-    <div class="col-6 crop">
-        <img src="/assets/images/gasoline.jpg" alt="tache gasoil" class="w-100 overflow-hidden img-fluid">
+<div class="jumbotron jumbotron-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <h1 class="h1">Contactez-nous</h1>
+                <h4>Pour toute question, envoyez-nous un message</h4>
+            </div>
+        </div>
     </div>
-    <div class="col-6 d-flex flex-column align-items-center justify-content-center text-muted fw-bold">
-        <em><h3>EN CONSTRUCTION</h3></em>
-        <br><br>
-        <hr class="my-3 w-75">
-        <h1>
-            <i class="fas fa-quote-left"></i> Tout arrive à qui sait attendre ! <i class="fas fa-quote-right"></i>
-        </h1>
-        <hr class="my-3 w-75">
-        <h6 class="mb-1">boutiquecollective93200@gmail.com</h6>
+</div>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8">
+            <form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group pb-1">
+                            <label for="name">
+                                Nom complet</label>
+                            <input type="text" class="form-control" id="name" placeholder="Nom et prénom"
+                                required="required" />
+                        </div>
+                        <div class="form-group pb-1">
+                            <label for="email">
+                                Email</label>
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="email" placeholder="Votre email"
+                                    required="required" />
+                            </div>
+                        </div>
+                        <div class="form-group pb-1">
+                            <label for="subject">
+                                Objet</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="subject" placeholder="Objet du message"
+                                    required="required" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">
+                                Message</label>
+                            <textarea name="message" id="message" class="form-control" rows="6" cols="25"
+                                required="required" placeholder="Message"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pt-2">
+                        <button type="submit" class="btn btn-dark float-end" id="btnContactUs">
+                            Envoyer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4 pt-3">
+            <form>
+                <legend>Où nous trouver :</legend>
+                <address>
+                    <strong>Lôcal Saint Denis</strong><br>
+                    20 rue de l'Aqueduc<br>
+                    93200, Saint Denis<br>
+                </address>
+                <address>
+                    <a href="mailto:#">boutiquecollective93200@gmail.com</a>
+                </address>
+            </form>
+        </div>
     </div>
 </div>

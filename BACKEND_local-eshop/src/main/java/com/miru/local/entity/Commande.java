@@ -7,7 +7,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,20 +40,20 @@ public class Commande {
     private LocalDateTime derniereMaj;
 
     @OneToMany(mappedBy = "commande")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Set<CommandeProduit> commandeProduits = new HashSet<>();
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<CommandeProduit> commandeProduits = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
 
     @OneToOne
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "adresse_facturation_id", referencedColumnName = "id")
     private Adresse adresseFacturation;
 
     @OneToOne
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "adresse_livraison_id", referencedColumnName = "id")
     private Adresse adresseLivraison;
 
@@ -62,7 +64,7 @@ public class Commande {
     public void add(CommandeProduit produitCommande) {
         if(produitCommande != null) {
             if(commandeProduits == null) {
-                commandeProduits = new HashSet<>();
+                commandeProduits = new ArrayList<>();
             }
             commandeProduits.add(produitCommande);
             produitCommande.setCommande(this);

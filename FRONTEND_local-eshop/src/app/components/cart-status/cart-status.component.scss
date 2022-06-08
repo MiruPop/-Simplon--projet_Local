@@ -1,7 +1,3 @@
-.cart-area.d-n{
-    display:block
-}
-
 .cart-area i{
     font-size:22px;
     float:left;
@@ -28,61 +24,8 @@
     margin-left:11px
 }
 
-@media (min-width:992px) and (max-width:1199px){
-    .cart-area i{
-        font-size:22px;
-        float:left;
-        margin-top:11;
-        color:#205b8d;
-        margin-right:15px
-    }
-}
-
 @media (max-width:991px){
     .total{
         display:none
     }
-    .cart-area i{
-        font-size:22px;
-        float:left;
-        margin-top:11;
-        color:#205b8d;
-        margin-right:15px
-    }
-}
-
-@media (max-width:767px){
-    .cart-area i{
-        font-size:22px;
-        float:left;
-        margin-top:11;
-        color:#205b8d;
-        margin-right:15px
-    }
-    .cart-area.d-b{
-        display:block
-    }
-    .total{
-        display:none
-    }
-    .total span{
-        display:inline-block;
-        background:#fff;
-        padding:0 10px;
-        color:#000;
-        border-top-right-radius:20px;
-        border-bottom-right-radius:20px;
-        margin-left:6px
-    }
-    .total{
-        background:#205b8d;
-        line-height:30px;
-        color:#fff;
-        border-radius:30px;
-        border:1px solid #205b8d;
-        float:left;
-        margin-top:11px;
-        padding-left:12px
-    }
-
 }

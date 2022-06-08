@@ -18,11 +18,11 @@ export class ShoppingCartComponent implements OnInit {
   cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0;
-  
+
+  buttonText: string;
+
   selectedDelivery: Delivery = new Delivery();
   deliveryModes: Delivery[] = [];
-
-  // globalPrice: number = 0;
 
   storage: Storage = sessionStorage;
 
@@ -37,6 +37,7 @@ export class ShoppingCartComponent implements OnInit {
         this.isAuthenticated = result.isAuthenticated;
       });
 
+    this.buttonText = 'Choisissez la livraison'
     this.getDeliveryModes();
 
     this.listCartDetails();
@@ -44,7 +45,7 @@ export class ShoppingCartComponent implements OnInit {
 
 
   getDeliveryModes() {
-    
+
     this.deliveryService.getDeliveryTypes().subscribe(
       data => {
         this.deliveryModes = data
@@ -83,8 +84,9 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onChange() {
-        this.storage.setItem('delivery', JSON.stringify(this.selectedDelivery));
-        console.log(this.selectedDelivery);
+    this.buttonText = "Passer commande";
+    this.storage.setItem('delivery', JSON.stringify(this.selectedDelivery));
+    console.log(this.selectedDelivery);
   }
 
 }

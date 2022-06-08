@@ -81,7 +81,7 @@
                                 <h6 class="mb-2">Livraison</h6>
                                 <div>
                                     <select class="select" (change)="onChange()" [(ngModel)]="selectedDelivery">
-                                        <option [ngValue]="null" [selected]="true">Sélectionner un type de livraison</option>
+                                        <option [ngValue]="null" disabled [selected]="true">Sélectionner un type de livraison</option>
                                         <option *ngFor="let livraison of deliveryModes" [ngValue]="livraison">
                                             {{livraison.type}} - <em>{{ livraison.prix }} €</em></option>
                                     </select>
@@ -97,9 +97,9 @@
                                 </div>
                                 <!-- Paiement -->
                                 <a [routerLink]="isAuthenticated? '/checkout' : '/login' " type="button"
-                                    class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark"
-                                    [class.disabled]="selectedDelivery.id != null? null: true">Passer
-                                    commande</a>
+                                    class="btn btn-block btn-lg" data-mdb-ripple-color="dark"
+                                    [class.disabled]="selectedDelivery.id != null? null: true"
+                                    [ngClass]="[buttonText === 'Choisissez la livraison' ? 'btn-light' : 'btn-dark']">{{ buttonText }}</a>
                             </td>
                         </tr>
                     </tbody>
